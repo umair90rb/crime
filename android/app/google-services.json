@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "330896103299",
+    "project_id": "communitysupportapp",
+    "storage_bucket": "communitysupportapp.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:330896103299:android:0bcc73e7d99a58ba4f88b6",
+        "android_client_info": {
+          "package_name": "com.base.community_support"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "330896103299-vopac6kj1gjijkr4glme2oin0vpgf3qd.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBHG2wASq4U_iTDd4DQi-ZTNHNVf2NimoM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "330896103299-vopac6kj1gjijkr4glme2oin0vpgf3qd.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
