@@ -1,12 +1,14 @@
 import 'dart:ui';
+import 'dart:convert';
 
 import 'package:community_support/ui/widget/button.dart';
 import 'package:community_support/ui/widget/link.dart';
 
 import 'package:circular_countdown_timer/circular_countdown_timer.dart';
 import 'package:pinput/pin_put/pin_put.dart';
-import 'package:pinput/pin_put/pin_put_state.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 
 import '../../widget/heading.dart';
@@ -28,8 +30,9 @@ class _OtpState extends State<Otp> {
   final TextEditingController pin = TextEditingController();
   bool resendVisible = false;
   String _verificationCode;
-  bool loggedIn;
+  bool loggedIn = false;
   GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
+  GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   final BoxDecoration pinPutDecoration = BoxDecoration(
     color: Colors.amber,
@@ -42,9 +45,9 @@ class _OtpState extends State<Otp> {
 
   @override
   Widget build(BuildContext context) {
-    if(loggedIn){
-      Navigator.pushNamed(context, '/home');
-    }
+    // if(loggedIn){
+    //   Navigator.pushNamed(context, '/home');
+    // }
     return Scaffold(
       key: _scaffoldKey,
       body: Container(
@@ -61,7 +64,6 @@ class _OtpState extends State<Otp> {
         child: SingleChildScrollView(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
-            // mainAxisAlignment: MainAxisAlignment.center,
             children: [
               SizedBox(height: 10),
               Row(
@@ -96,37 +98,56 @@ class _OtpState extends State<Otp> {
                 fontSize: 12,
               ),
 
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal:20.0),
-                child: PinPut(
-                  withCursor: true,
-                  fieldsCount: 6,
-                  controller: pin,
+              Form(
+                key: _formKey,
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal:20.0),
+                  child: PinPut(
+                    withCursor: true,
+                    fieldsCount: 6,
+                    controller: pin,
+                    validator: (value){
+                      if(value.isEmpty){
+                        return "Pin is required!";
+                      }
+                      return null;
+                    },
+                    keyboardType: TextInputType.number,
+                    eachFieldHeight: 50,
+                    eachFieldWidth: 50,
+                    eachFieldPadding: EdgeInsets.only(left: 5),
+                    submittedFieldDecoration: pinPutDecoration,
+                    selectedFieldDecoration: pinPutDecoration,
+                    followingFieldDecoration: pinPutDecoration,
+                    pinAnimationType: PinAnimationType.fade,
+                    onSubmit: (pin) async {
+                      print(pin);
+                      try {
+                        await FirebaseAuth.instance
+                            .signInWithCredential(PhoneAuthProvider.credential(
+                            verificationId: _verificationCode, smsCode: pin))
+                            .then((value) async {
+                          if (value.user != null) {
+                            dynamic profile = await FirebaseFirestore.instance
+                                .collection('profile').doc(value.user.uid)
+                                .get();
+                            print(profile.data());
 
-                  keyboardType: TextInputType.number,
-                  eachFieldHeight: 50,
-                  eachFieldWidth: 50,
-                  eachFieldPadding: EdgeInsets.only(left: 5),
-                  submittedFieldDecoration: pinPutDecoration,
-                  selectedFieldDecoration: pinPutDecoration,
-                  followingFieldDecoration: pinPutDecoration,
-                  pinAnimationType: PinAnimationType.fade,
-                  onSubmit: (pin) async {
-                    try {
-                      await FirebaseAuth.instance
-                          .signInWithCredential(PhoneAuthProvider.credential(
-                          verificationId: _verificationCode, smsCode: pin))
-                          .then((value) async {
-                        if (value.user != null) {
-                          Navigator.pushNamed(context, '/home');
-                        }
-                      });
-                    } catch (e) {
-                      FocusScope.of(context).unfocus();
-                      _scaffoldKey.currentState
-                          .showSnackBar(SnackBar(content: Text('Invalid OTP')));
-                    }
-                  },
+                            final prefs = await SharedPreferences.getInstance();
+                            prefs.setString('user', jsonEncode(value.user.uid));
+                            prefs.setString('profile', jsonEncode(profile.data()));
+                            prefs.setBool('isLoggedIn', true);
+                            profile['type'] == 'police' || profile['type'] == 'security' ? Navigator.pushNamed(context, '/authorityHome') : Navigator.pushNamed(context, '/home');
+                          }
+                        });
+                      } catch (e) {
+                        print(e);
+                        FocusScope.of(context).unfocus();
+                        _scaffoldKey.currentState
+                            .showSnackBar(SnackBar(content: Text('Invalid OTP')));
+                      }
+                    },
+                  ),
                 ),
               ),
 
@@ -172,6 +193,33 @@ class _OtpState extends State<Otp> {
 
 
               RoundedButton(label: 'Log In', onPressed: () async {
+                if(_formKey.currentState.validate()){
+                  print(pin.text);
+                  try {
+                    await FirebaseAuth.instance
+                        .signInWithCredential(PhoneAuthProvider.credential(
+                        verificationId: _verificationCode, smsCode: pin.text))
+                        .then((value) async {
+                      if (value.user != null) {
+                        DocumentSnapshot profile = await FirebaseFirestore.instance
+                            .collection('profile').doc(value.user.uid)
+                            .get();
+
+                        print(profile.data());
+                        final prefs = await SharedPreferences.getInstance();
+                        prefs.setString('user', jsonEncode(value.user.uid));
+                        prefs.setString('profile', jsonEncode(profile.data()));
+                        prefs.setBool('isLoggedIn', true);
+                        profile['type'] == 'police' || profile['type'] == 'security' ? Navigator.pushNamed(context, '/authorityHome') : Navigator.pushNamed(context, '/home');
+
+                      }
+                    });
+                  } catch (e) {
+                    FocusScope.of(context).unfocus();
+                    _scaffoldKey.currentState
+                        .showSnackBar(SnackBar(content: Text('Invalid OTP')));
+                  }
+                }
 
               }),
 
@@ -198,12 +246,21 @@ class _OtpState extends State<Otp> {
         timeout: Duration(seconds: 120),
         verificationCompleted: (credential) async {
 
-          await FirebaseAuth.instance.signInWithCredential(credential).then((value){
+          await FirebaseAuth.instance.signInWithCredential(credential).then((value) async {
             if(value.user != null){
               print(value.user.toString());
-              setState(() {
-                loggedIn = true;
-              });
+              dynamic profile = await FirebaseFirestore.instance
+                  .collection('profile').doc(value.user.uid)
+                  .get();
+              print(profile.data());
+              final prefs = await SharedPreferences.getInstance();
+              prefs.setString('user', jsonEncode(value.user.uid));
+              prefs.setString('profile', jsonEncode(profile.data()));
+              prefs.setBool('isLoggedIn', true);
+              profile['type'] == 'police' || profile['type'] == 'security' ? Navigator.pushNamed(context, '/authorityHome') : Navigator.pushNamed(context, '/home');
+              // setState(() {
+              //   loggedIn = true;
+              // });
             }
           });
         },
@@ -217,13 +274,14 @@ class _OtpState extends State<Otp> {
             _verificationCode = verificationId;
           });
         },
-        codeAutoRetrievalTimeout: null,
+        codeAutoRetrievalTimeout: (String str){
+          print(str);
+        },
     );
   }
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     _verifyPhone();
   }

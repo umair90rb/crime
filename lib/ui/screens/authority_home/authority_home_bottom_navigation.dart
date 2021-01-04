@@ -1,28 +1,26 @@
-import 'package:community_support/ui/screens/home/news.dart';
-import 'package:community_support/ui/screens/home/report.dart';
+import 'authority_news.dart';
 import 'package:community_support/ui/screens/setting/setting.dart';
 import 'package:community_support/ui/shared/bar.dart';
 import 'package:community_support/ui/shared/drawer.dart';
-import 'package:community_support/ui/widget/input.dart';
-import 'map.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-class Home extends StatefulWidget {
+import 'authority_report.dart';
+
+class AuthorityHome extends StatefulWidget {
 
   @override
-  _HomeState createState() => _HomeState();
+  _AuthorityHomeState createState() => _AuthorityHomeState();
 }
 
-class _HomeState extends State<Home> with AutomaticKeepAliveClientMixin{
+class _AuthorityHomeState extends State<AuthorityHome> with AutomaticKeepAliveClientMixin{
   GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
   int _selectedIndex = 0;
 
   List<Widget> _widgetOptions = <Widget>[
-    Map(),
-    Report(),
-    News(),
+    AuthorityReport(),
+    AuthorityNews(),
     Setting()
   ];
 
@@ -41,20 +39,17 @@ class _HomeState extends State<Home> with AutomaticKeepAliveClientMixin{
 
   List<String> title = [
     'ABAGANA SECURITY',
-    'REPORTS',
     'NEWS',
     'SETTING'
   ];
 
   List<String> navigation = [
-    'Map',
     'Report',
     'News',
     'Setting'
   ];
 
   List<IconData> navigationIcon = [
-    Icons.location_pin,
     Icons.assignment_sharp,
     Icons.chat_outlined,
     Icons.settings
@@ -71,11 +66,11 @@ class _HomeState extends State<Home> with AutomaticKeepAliveClientMixin{
         title: title.elementAt(_selectedIndex),
       ),
       drawer: AppDrawer(),
-      floatingActionButton: _selectedIndex == 3 ? null :FloatingActionButton(
-        onPressed: () => Navigator.pushNamed(context, '/reportIncident'),
+      floatingActionButton: _selectedIndex == 2 ? null :FloatingActionButton(
+        onPressed: () => Navigator.pushNamed(context, '/addNews'),
         backgroundColor: Colors.red,
         child: Icon(
-          Icons.report_outlined,
+          Icons.add,
           size: 40,
         ),
       ),
@@ -105,7 +100,9 @@ class _HomeState extends State<Home> with AutomaticKeepAliveClientMixin{
         onTap: _onItemTapped,
         backgroundColor: Colors.grey,
       ),
-      body:  _widgetOptions.elementAt(_selectedIndex),
+      body: Center(
+        child: _widgetOptions.elementAt(_selectedIndex),
+      ),
     );
   }
 }

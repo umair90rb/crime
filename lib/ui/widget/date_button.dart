@@ -10,8 +10,9 @@ class DatePicker extends StatelessWidget {
   final DateTime selectedDate;
   final Color themeColor;
   final DateTime firstDate ;
+  final bool elevation;
 
-  DatePicker({@required this.firstDate, this.label = "", this.labelColor = Colors.black, this.borderRadius = 40, this.backgroundColor = Colors.white, this.icon = Icons.calendar_today, this.onDateSelect, this.selectedDate, this.themeColor = Colors.blue,});
+  DatePicker({@required this.firstDate, this.elevation = false, this.label = "", this.labelColor = Colors.black, this.borderRadius = 40, this.backgroundColor = Colors.white, this.icon = Icons.calendar_today, this.onDateSelect, this.selectedDate, this.themeColor = Colors.blue,});
 
   final DateTime initialDate = DateTime.now();
 
@@ -46,7 +47,16 @@ class DatePicker extends StatelessWidget {
         decoration: BoxDecoration(
           color: backgroundColor,
           borderRadius: BorderRadius.circular(borderRadius),
+          boxShadow: elevation == true ? [
+            BoxShadow(
+              color: Colors.black54,
+              offset: Offset(0.0, 3.0), //(x,y)
+              blurRadius: 8.0,
+            ),
+          ] : null ,
         ),
+
+      
         width: double.infinity,
         margin: EdgeInsets.symmetric(horizontal:15.0, vertical: 10),
         padding: const EdgeInsets.symmetric(horizontal:25.0, vertical: 10),

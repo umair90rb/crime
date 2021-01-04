@@ -8,12 +8,14 @@ class RoundedButton extends StatelessWidget {
   final Color backgroundColor;
   final double width;
   final double height;
+  final bool isDisable;
 
-  RoundedButton({@required this.label, @required this.onPressed, this.borderRadius = 30, this.textColor = Colors.white, this.backgroundColor = Colors.black, this.width = 40, this.height = 15});
+  RoundedButton({@required this.label, this.isDisable = false, @required this.onPressed, this.borderRadius = 30, this.textColor = Colors.white, this.backgroundColor = Colors.black, this.width = 40, this.height = 15});
 
   @override
   Widget build(BuildContext context) {
     return RaisedButton(
+
       padding: EdgeInsets.symmetric(horizontal: width, vertical: height),
         shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(borderRadius),
@@ -28,7 +30,7 @@ class RoundedButton extends StatelessWidget {
             letterSpacing: 1
           ),
         ),
-        onPressed: onPressed
+        onPressed: isDisable ? null : onPressed
       );
   }
 }

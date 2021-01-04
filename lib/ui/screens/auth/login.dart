@@ -1,9 +1,11 @@
 import 'dart:ui';
 
+import 'package:community_support/ui/screens/auth/otp.dart';
 import 'package:community_support/ui/widget/button.dart';
 import 'package:community_support/ui/widget/colored.dart';
 import 'package:community_support/ui/widget/input.dart';
 import 'package:community_support/ui/widget/link.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 import '../../widget/heading.dart';
 
@@ -15,12 +17,14 @@ class Login extends StatelessWidget {
   final TextEditingController phone = TextEditingController();
   final TextEditingController code = TextEditingController();
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
 
   @override
   Widget build(BuildContext context) {
 
     return Scaffold(
+      key: _scaffoldKey,
       body: Container(
         width: double.infinity,
         height: double.infinity,
@@ -68,7 +72,32 @@ class Login extends StatelessWidget {
                 label: 'Send Code',
                 onPressed: (){
                   if(_formKey.currentState.validate()){
-                    Navigator.pushNamed(context, '/otp', arguments: phone.text);
+                    FirebaseFirestore.instance
+                        .collection('profile')
+                        .where('phone', isEqualTo: phone.text)
+                        .limit(1)
+                        .get()
+                        .then((value){
+
+                          if(value.docs.length < 1){
+                                _scaffoldKey.currentState.showSnackBar(
+                                  SnackBar(
+                                    content: Text('User not exist!'),
+                                    action: SnackBarAction(
+                                      label: 'Register Now',
+                                      onPressed: () => Navigator.pushNamed(context, '/registerAs'),
+                                    ),
+                                  )
+                                );
+                                return;
+                          }
+                          print(value.docs[0]);
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(builder: (context) => Otp(phone: phone.text)),
+                          );
+
+                    });
                   }
                 },
             ),

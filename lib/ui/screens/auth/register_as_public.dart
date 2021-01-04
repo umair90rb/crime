@@ -5,12 +5,15 @@ import 'dart:ui';
 import 'package:community_support/arguments/register_arguments.dart';
 import 'package:community_support/ui/screens/auth/register_as_public_otp.dart';
 import 'package:community_support/ui/widget/button.dart';
-import 'package:community_support/ui/widget/colored.dart';
+// import 'package:file_picker/file_picker.dart';
 import 'package:community_support/ui/widget/dropdown.dart';
 import 'package:community_support/ui/widget/input.dart';
+import 'package:community_support/ui/widget/input_button.dart';
 import 'package:community_support/ui/widget/link.dart';
 import 'package:community_support/ui/widget/radio.dart';
 import 'package:community_support/ui/widget/date_button.dart';
+import 'package:community_support/ui/widget/res_card.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
 
@@ -26,6 +29,7 @@ class RegisterAsPublic extends StatefulWidget {
 
 class _RegisterAsPublicState extends State<RegisterAsPublic> {
 
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final TextEditingController fullName = TextEditingController();
   final TextEditingController familyName = TextEditingController();
@@ -35,14 +39,42 @@ class _RegisterAsPublicState extends State<RegisterAsPublic> {
   final TextEditingController nextOfKin = TextEditingController();
   final TextEditingController phone = TextEditingController();
   final TextEditingController email = TextEditingController();
-  final TextEditingController id = TextEditingController();
+  String showId;
+  File id;
   File photo;
   DateTime dob;
 
 
-  final picker = ImagePicker();
-  Future chooseImage() async {
+  Future chooseImage(scaffoldKey, file) async {
+    final picker = ImagePicker();
     final pickedFile = await picker.getImage(source:ImageSource.gallery);
+    if(pickedFile == null){
+      scaffoldKey.currentState.showSnackBar(
+          SnackBar(content: Text('No file choosen!'))
+      );
+      return;
+    }
+    File cropped = await ImageCropper.cropImage(
+        sourcePath: pickedFile.path,
+        aspectRatio: CropAspectRatio(
+            ratioX: 1, ratioY: 1),
+        compressQuality: 100,
+        maxWidth: 700,
+        maxHeight: 700,
+        compressFormat: ImageCompressFormat.jpg,
+        androidUiSettings: AndroidUiSettings(
+          toolbarColor: Colors.blue,
+          toolbarTitle: "Crop Image",
+          statusBarColor: Colors.black,
+          backgroundColor: Colors.white,
+        )
+    );
+    return cropped;
+  }
+
+  Future chooseFile() async {
+    final pic = ImagePicker();
+    final pickedFile = await pic.getImage(source:ImageSource.gallery);
     File cropped = await ImageCropper.cropImage(
         sourcePath: pickedFile.path,
         aspectRatio: CropAspectRatio(
@@ -60,18 +92,16 @@ class _RegisterAsPublicState extends State<RegisterAsPublic> {
     );
 
     this.setState((){
-      photo = cropped;
+      id = cropped;
     });
 
   }
 
 
-
-
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      key: _scaffoldKey,
       body: Container(
         width: double.infinity,
         height: double.infinity,
@@ -128,7 +158,7 @@ class _RegisterAsPublicState extends State<RegisterAsPublic> {
                   selectedDate: dob,
                   themeColor: Colors.amber,
                   labelColor: Colors.white,
-                  label: "Date of Birth",
+                  label: dob == null ? "Date of Birth" : "${dob.day}/${dob.month}/${dob.year}",
                   backgroundColor: Colors.black45,
                   onDateSelect: (value){
                     print(value);
@@ -139,15 +169,6 @@ class _RegisterAsPublicState extends State<RegisterAsPublic> {
                   },
                 ),
 
-
-                // RoundedInput(
-                //   validation: true,
-                //   controller: dob,
-                //   label: "Date of Birth",
-                //   textInputType: TextInputType.datetime,
-                //   backgroundColor: Colors.black45,
-                //   labelColor: Colors.white,
-                // ),
 
                 RadioButton(
                   groupValue: martialStatus,
@@ -176,7 +197,7 @@ class _RegisterAsPublicState extends State<RegisterAsPublic> {
                   textColor: Colors.white,
                   dropdownValue: title,
                   dropdownItems: [
-                    'MR/MRS', 'HRH', 'DR', 'ENGR', 'CHIEF'
+                    'Mr.', 'Mrs.', 'Miss', 'Prof.', 'Ozo', 'Lord', 'Lady', 'Sir', 'Fr.', 'Sr.', 'Elder','Dr', 'Engr.', 'Chief'
                   ],
                   hint: 'Title',
                   onChanged: (value){
@@ -219,7 +240,7 @@ class _RegisterAsPublicState extends State<RegisterAsPublic> {
                   textColor: Colors.white,
                   dropdownValue: village,
                   dropdownItems: [
-                    'ADAGBE', 'AKPU', 'AMAENYE', 'OROFIA', 'URU', 'URUOKPALA', 'UMUDUNU'
+                    'Adagbe', 'Akpu', 'Amaenye', 'Orofia', 'Uru', 'Uruokpala', 'Umudunu'
                   ],
                   hint: 'Village',
                   onChanged: (value){
@@ -229,19 +250,63 @@ class _RegisterAsPublicState extends State<RegisterAsPublic> {
                   },
                 ),
 
-                RoundedInput(
-                  validation: true,
-                  controller: id,
-                  label: "Id",
-                  textInputType: TextInputType.datetime,
+                InputButton(
+                  onTap: (){
+                    showCupertinoDialog(
+
+                      barrierDismissible: true,
+                        context: context,
+                        builder: (context) => ResCard(
+                          onTap: (value){
+                            setState(() {
+                              showId = value;
+                            });
+                            Navigator.pop(context);
+                          },
+                          title: 'Select',
+                          content: ['Voters Card', 'Driver\s Licence', 'International Passport', 'Student ID', 'National ID Card'],
+                        )
+                    );
+                  },
                   backgroundColor: Colors.black45,
+                  label: "ID",
                   labelColor: Colors.white,
                 ),
 
-                FlatButton.icon(
-                    onPressed: chooseImage,
+                Visibility(
+                  visible: showId == null ? false : true,
+                  child: FlatButton.icon(
+                    onPressed: () async {
+                      id = await chooseImage(_scaffoldKey, id);
+                    },
                     icon: Icon(Icons.camera),
-                    label: Text('Upload You Image'),
+                    label: Text(
+                        'Upload Your $showId',
+                      style: TextStyle(
+                          color: Colors.white,
+                          decoration: TextDecoration.underline
+                      ),
+                    ),
+                  ),
+                ),
+
+
+                FlatButton.icon(
+                    onPressed: () async {
+                      photo = await chooseImage(_scaffoldKey, photo);
+                    },
+                    icon: Icon(Icons.camera),
+                    label: Text(
+                      'Upload Your Image',
+                      style: TextStyle(
+                        color: Colors.white,
+                        decoration: TextDecoration.underline
+                      ),
+                    ),
+                ),
+
+                SizedBox(
+                  height: 5,
                 ),
 
                 RoundedButton(
@@ -251,6 +316,7 @@ class _RegisterAsPublicState extends State<RegisterAsPublic> {
                           && title != null
                           && village != null
                           && photo != null
+                          && id != null
                       ){
                         Navigator.push(
                           context,
@@ -265,13 +331,19 @@ class _RegisterAsPublicState extends State<RegisterAsPublic> {
                                   phone: phone.text,
                                   email: email.text,
                                   village: village,
-                                  id: id.text,
+                                  id: id,
                                   photo: photo
                               )
                           )),
                         );
 
                       }
+                      _scaffoldKey.currentState.showSnackBar(
+                        SnackBar(
+                          content: Text('Please fill all fields and add images also!'),
+
+                        )
+                      );
                     },
                 ),
 

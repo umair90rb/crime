@@ -20,16 +20,16 @@ class RoundedInput extends StatelessWidget {
     return Padding(
       padding: EdgeInsets.symmetric(horizontal:15.0, vertical: 10),
       child: Container(
-        decoration: elevation == true ? BoxDecoration(
+        decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(borderRadius),
-          boxShadow: [
+          boxShadow: elevation == true ? [
             BoxShadow(
               color: Colors.black54,
               offset: Offset(0.0, 3.0), //(x,y)
               blurRadius: 8.0,
             ),
-          ],
-        ) : null,
+          ] : null ,
+        ),
         child: TextFormField(
           maxLines: maxLines,
           validator: (val){
@@ -53,7 +53,7 @@ class RoundedInput extends StatelessWidget {
           ),
           obscureText: obscureText,
           decoration: InputDecoration(
-            prefixIcon: preIcon == null ? Container() : Icon(preIcon, color: labelColor,),
+            prefixIcon: preIcon == null ? null : Icon(preIcon, color: labelColor,),
             errorBorder: OutlineInputBorder(
                 borderRadius: BorderRadius.all(Radius.circular(borderRadius)),
                 borderSide: BorderSide(color: backgroundColor)
