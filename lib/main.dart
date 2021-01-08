@@ -27,7 +27,8 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       routes: routes,
-      initialRoute: isLoggedIn ? (profile['type'] == 'security' || profile['type'] == 'police' ? '/authorityHome' : '/home') : '/loginAs' ,
+      initialRoute: '/admin'
+      // isLoggedIn ? (profile['type'] == 'security' || profile['type'] == 'police' ? '/authorityHome' : '/home') : '/loginAs' ,
     );
   }
 }

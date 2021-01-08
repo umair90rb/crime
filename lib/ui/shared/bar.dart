@@ -7,12 +7,14 @@ class Bar extends StatelessWidget implements PreferredSizeWidget {
   final bool isHelpIcon;
   final double size;
   final String title;
+  final bottom;
   final GlobalKey<ScaffoldState> scafoldKey;
-  Bar({this.isHelpIcon = true, this.size = 25, this.title = '', this.scafoldKey});
+  Bar({this.isHelpIcon = true, this.size = 25, this.title = '', this.bottom = null, this.scafoldKey});
 
   @override
   Widget build(BuildContext context) {
     return AppBar(
+      bottom: bottom,
       toolbarHeight: 100,
       leading: IconButton(
        icon: Icon(

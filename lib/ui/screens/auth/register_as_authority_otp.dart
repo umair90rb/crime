@@ -63,26 +63,44 @@ class _RegisterAuthorityOtpState extends State<RegisterAuthorityOtp> {
     }
   }
 
-  Future createProfile(RegisterAuthorityArguments arg, dynamic avatar, String uid){
+  Future createProfile(RegisterAuthorityArguments arg, dynamic avatar, dynamic id, String uid){
     DocumentReference profile = FirebaseFirestore.instance.collection('profile').doc(uid);
     return profile.set({
-      'type': arg.serviceNo == null ? 'police' : 'security',
+      'family_name': arg.familyName,
+      'dob': arg.dob,
+      'martial_status': arg.martialStatus,
+      'title': arg.title,
+      'next_of_kin': arg.nextToKin,
+      'village':arg.village,
+      'type': arg.type,
       'phone': arg.phone,
       'full_name': arg.fullName, // John Doe
       'email':arg.email,
-      'id_no': arg.id,
       'service_no':arg.serviceNo,
-      'avatar':avatar
+      'avatar':avatar,
+      'id':id,
+      'createdAt':arg.createdAt,
+      'status':'New'
     }).then((value) async {
+      DocumentReference service = FirebaseFirestore.instance.collection('service').doc(arg.profileDocId);
+      await service.delete();
       final prefs = await SharedPreferences.getInstance();
       prefs.setString('profile', jsonEncode({
-        'type': arg.serviceNo == null ? 'police' : 'security',
+        'family_name': arg.familyName,
+        'dob': arg.dob,
+        'martial_status': arg.martialStatus,
+        'title': arg.title,
+        'next_to_kin': arg.nextToKin,
+        'village':arg.village,
+        'type': arg.type,
         'phone': arg.phone,
         'full_name': arg.fullName, // John Doe
         'email':arg.email,
-        'id_no': arg.id,
         'service_no':arg.serviceNo,
-        'avatar':avatar
+        'avatar':avatar,
+        'id':id,
+        'createdAt':arg.createdAt,
+        'status':'New'
       }));
     })
         .catchError((error) => print("Failed to add user: $error"));
@@ -170,7 +188,8 @@ class _RegisterAuthorityOtpState extends State<RegisterAuthorityOtp> {
                           .then((value) async {
                         if (value.user != null) {
                           dynamic url = await uploadFile(widget.arg.photo);
-                          dynamic profile = await createProfile(widget.arg, url, value.user.uid);
+                          dynamic id = await uploadFile(widget.arg.id);
+                          dynamic profile = await createProfile(widget.arg, url, id, value.user.uid);
                           print(profile);
                           final prefs = await SharedPreferences.getInstance();
                           prefs.setString('user', jsonEncode(value.user.uid));
@@ -239,7 +258,8 @@ class _RegisterAuthorityOtpState extends State<RegisterAuthorityOtp> {
                           .then((value) async {
                         if (value.user != null) {
                           dynamic url = await uploadFile(widget.arg.photo);
-                          dynamic profile = await createProfile(widget.arg, url, value.user.uid);
+                          dynamic id = await uploadFile(widget.arg.id);
+                          dynamic profile = await createProfile(widget.arg, url, id, value.user.uid);
                           print(profile);
                           final prefs = await SharedPreferences.getInstance();
                           prefs.setString('user', jsonEncode(value.user.uid));
@@ -283,9 +303,11 @@ class _RegisterAuthorityOtpState extends State<RegisterAuthorityOtp> {
         print(widget.arg.photo.path);
 
         dynamic url = await uploadFile(widget.arg.photo);
+        dynamic id = await uploadFile(widget.arg.id);
+
         await FirebaseAuth.instance.signInWithCredential(credential).then((value) async {
           if(value.user != null){
-            dynamic profile = await createProfile(widget.arg, url, value.user.uid);
+            dynamic profile = await createProfile(widget.arg, url, id, value.user.uid);
             final prefs = await SharedPreferences.getInstance();
             prefs.setString('user', jsonEncode(value.user.uid));
             prefs.setBool('isLoggedIn', true);

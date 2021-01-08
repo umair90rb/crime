@@ -18,7 +18,7 @@ class _MyReportsState extends State<MyReports> {
     final prefs = await SharedPreferences.getInstance();
     String uid = prefs.getString('user');
 
-    List<QueryDocumentSnapshot> snapshot = await db.getSnapshotWithQuery('crimes', 'uid', uid);
+    List<QueryDocumentSnapshot> snapshot = await db.getSnapshotWithQuery('crimes', 'uid', [uid]);
     return snapshot;
   }
 

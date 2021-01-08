@@ -17,14 +17,7 @@ class _CaseSolvedState extends State<CaseSolved> {
 
   Future getCrime;
   getCrimes() async {
-    List<QueryDocumentSnapshot> snapshot = await db.getSnapshotWithQuery('crimes', 'status', 'Solved');
-    print(snapshot.first.data());
-    for(var i = 0; i < snapshot.length; i++){
-      DocumentSnapshot profile = await db.getDoc('profile', snapshot[i]['uid']);
-      print(profile.data());
-      print(snapshot[i]['uid']);
-      profiles.add(profile);
-    }
+    List<QueryDocumentSnapshot> snapshot = await db.getSnapshotWithQuery('crimes', 'status', ['Solved']);
     return snapshot;
   }
 
@@ -38,10 +31,10 @@ class _CaseSolvedState extends State<CaseSolved> {
     return ListTile(
       leading: CircleAvatar(
           radius: 25,
-          backgroundImage: NetworkImage(profiles[i]['avatar'])
+          backgroundImage: NetworkImage(doc['userAvatar'])
       ),
       title: Text(
-        profiles[i]['full_name'],
+        doc['userName'],
         style: TextStyle(fontSize: 20, color: Colors.black),
 
       ),
@@ -71,7 +64,7 @@ class _CaseSolvedState extends State<CaseSolved> {
     return Scaffold(
       appBar: Bar(
         title: 'Case Solved',
-        isHelpIcon: false,
+        isHelpIcon: true,
         scafoldKey: _scaffoldKey,
       ),
       body: Container(

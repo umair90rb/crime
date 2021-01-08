@@ -1,6 +1,9 @@
 import 'package:community_support/ui/widget/full_row.dart';
 import 'package:community_support/ui/widget/heading.dart';
 import 'package:flutter/material.dart';
+import 'dart:core';
+import 'package:url_launcher/url_launcher.dart';
+import 'package:share/share.dart';
 
 class Setting extends StatefulWidget {
   @override
@@ -8,6 +11,23 @@ class Setting extends StatefulWidget {
 }
 
 class _SettingState extends State<Setting> {
+
+  final Uri _sendEmail = Uri(
+      scheme: 'mailto',
+      // path: 'smith@example.com',
+      // queryParameters: {
+      //   'subject': 'Example Subject & Symbols are allowed!'
+      // }
+  );
+
+  final Uri _writeUs = Uri(
+    scheme: 'mailto',
+    // path: 'smith@example.com',
+    queryParameters: {
+      'subject': 'Write Us your opinion and reviews'
+    }
+  );
+
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
@@ -37,22 +57,26 @@ class _SettingState extends State<Setting> {
             FullWidget(
               text: 'Send Email',
               icon: Icons.chat,
+              onTap: () => launch(_sendEmail.toString()),
             ),
 
 
             FullWidget(
               text: 'Rate App',
               icon: Icons.thumb_up,
+              onTap: () => Share.share('https://play.google.com/store/apps'),
             ),
 
             FullWidget(
               text: 'Share App',
               icon: Icons.share,
+              onTap: () => Share.share('https://play.google.com/store/apps'),
             ),
 
             FullWidget(
               text: 'Write Us',
               icon: Icons.announcement,
+              onTap: () => launch(_writeUs.toString()),
             ),
 
             SizedBox(height: 10,),
@@ -60,11 +84,13 @@ class _SettingState extends State<Setting> {
             FullWidget(
               text: 'Terms and conditions',
               icon: Icons.article_sharp,
+              onTap: () => Navigator.pushNamed(context, '/terms'),
             ),
 
             FullWidget(
               text: 'Privacy Policy',
               icon: Icons.lock_open,
+              onTap: () => Navigator.pushNamed(context, '/privacy'),
             ),
 
 

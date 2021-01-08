@@ -9,7 +9,7 @@ class Map extends StatefulWidget {
   _MapState createState() => _MapState();
 }
 
-class _MapState extends State<Map> with AutomaticKeepAliveClientMixin<Map> {
+class _MapState extends State<Map> with AutomaticKeepAliveClientMixin {
 
   @override
   bool get wantKeepAlive => true;

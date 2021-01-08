@@ -10,9 +10,11 @@ class RegisterArguments {
   final String phone;
   final String email;
   final String village;
-  final File id;
-  final File photo;
+  final dynamic id;
+  final dynamic photo;
+  final DateTime createdAt;
+  final String docId;
 
-  RegisterArguments({this.fullName, this.familyName, this.dob, this.martialStatus, this.title, this.nextToKin, this.phone, this.email, this.village, this.id, this.photo});
+  RegisterArguments({this.fullName, this.createdAt, this.docId, this.familyName, this.dob, this.martialStatus, this.title, this.nextToKin, this.phone, this.email, this.village, this.id, this.photo});
 
 }

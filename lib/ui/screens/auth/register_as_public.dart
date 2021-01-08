@@ -72,31 +72,6 @@ class _RegisterAsPublicState extends State<RegisterAsPublic> {
     return cropped;
   }
 
-  Future chooseFile() async {
-    final pic = ImagePicker();
-    final pickedFile = await pic.getImage(source:ImageSource.gallery);
-    File cropped = await ImageCropper.cropImage(
-        sourcePath: pickedFile.path,
-        aspectRatio: CropAspectRatio(
-            ratioX: 1, ratioY: 1),
-        compressQuality: 100,
-        maxWidth: 700,
-        maxHeight: 700,
-        compressFormat: ImageCompressFormat.jpg,
-        androidUiSettings: AndroidUiSettings(
-          toolbarColor: Colors.blue,
-          toolbarTitle: "Crop Image",
-          statusBarColor: Colors.black,
-          backgroundColor: Colors.white,
-        )
-    );
-
-    this.setState((){
-      id = cropped;
-    });
-
-  }
-
 
   @override
   Widget build(BuildContext context) {
@@ -332,7 +307,8 @@ class _RegisterAsPublicState extends State<RegisterAsPublic> {
                                   email: email.text,
                                   village: village,
                                   id: id,
-                                  photo: photo
+                                  photo: photo,
+                                  createdAt: DateTime.now()
                               )
                           )),
                         );

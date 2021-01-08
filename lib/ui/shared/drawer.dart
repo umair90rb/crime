@@ -23,7 +23,6 @@ class _AppDrawerState extends State<AppDrawer> {
   _getProfile() async {
     final prefs = await SharedPreferences.getInstance();
     String profile = prefs.getString('profile');
-
     decodedProfile = jsonDecode(profile);
 
     icons = [
@@ -66,12 +65,10 @@ class _AppDrawerState extends State<AppDrawer> {
   @override
   Widget build(BuildContext context) {
 
-
     return FutureBuilder(
       future: getProfile,
       builder: (context, snapshot) {
         if(snapshot.hasData){
-
 
         return SizedBox(
           width: 200,

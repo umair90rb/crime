@@ -27,6 +27,7 @@ class DbServices{
     return doc;
   }
 
+
   Future updateDoc(String collection, String docId, Map<String, dynamic> data) async {
     DocumentReference docRef = firestore.collection(collection).doc(docId);
     docRef.update(data).then((value){
@@ -36,13 +37,14 @@ class DbServices{
     });
   }
 
-  Future getSnapshotWithQuery(String collection, String field, String value ) async {
+  Future getSnapshotWithQuery(String collection, String field, List<dynamic> value ) async {
     CollectionReference colRef = firestore.collection(collection);
     QuerySnapshot querySnapshot = await colRef
-        .where(field, isEqualTo: value)
+        .where(field, whereIn: value)
         .get();
     return querySnapshot.docs;
   }
+
 
   Future uploadFile(String collection, File file) async {
     String name = basename(file.path);

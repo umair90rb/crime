@@ -298,12 +298,12 @@ class _ProfileState extends State<Profile> {
                     uid = uid.replaceAll('"', '');
 
                     db.updateDoc('profile', uid, {
-                      'fullName': fullName.text,
-                      'familyName': familyName.text,
+                      'full_name': fullName.text,
+                      'family_name': familyName.text,
                       'dob': dob == null ? arg['dob'] : "${dob.day}/${dob.month}/${dob.year}",
-                      'martialStatus': martialStatus,
+                      'martial_status': martialStatus,
                       'title': title,
-                      'nextToKin': nextOfKin.text,
+                      'next_to_kin': nextOfKin.text,
                       'phone': phone.text,
                       'email': email.text,
                       'village': village,

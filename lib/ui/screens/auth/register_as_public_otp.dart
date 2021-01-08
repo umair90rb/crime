@@ -79,7 +79,9 @@ class _RegisterOtpState extends State<RegisterOtp> {
       'email':arg.email,
       'village': arg.village,
       'id': id,
-      'avatar':avatar
+      'avatar':avatar,
+      'createdAt': arg.createdAt,
+      'status':'New'
     }).then((value) async {
       final prefs = await SharedPreferences.getInstance();
       prefs.setString('profile', jsonEncode({
@@ -93,7 +95,9 @@ class _RegisterOtpState extends State<RegisterOtp> {
         'email':arg.email,
         'village': arg.village,
         'id': id,
-        'avatar':avatar
+        'avatar':avatar,
+        'createdAt': arg.createdAt,
+        'status':'New'
       }));
       print('user added');
     })

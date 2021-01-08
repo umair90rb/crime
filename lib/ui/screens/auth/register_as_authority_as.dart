@@ -38,7 +38,7 @@ class RegisterAsAuthorityAs extends StatelessWidget {
 
             RoundedButton(
               label: "Security",
-              onPressed: () => Navigator.pushNamed(context, '/registerAsAuthority', arguments: 'Security'),
+              onPressed: () => Navigator.pushNamed(context, '/registerAsAuthority', arguments: 'security'),
             ),
             SizedBox(height: 10),
             Colored(
@@ -52,7 +52,7 @@ class RegisterAsAuthorityAs extends StatelessWidget {
             RoundedButton(
               width: 55,
               label: "Police",
-              onPressed: () => Navigator.pushNamed(context, '/registerAsAuthority', arguments: 'Police'),
+              onPressed: () => Navigator.pushNamed(context, '/registerAsAuthority', arguments: 'police'),
             ),
             SizedBox(height: 100),
 

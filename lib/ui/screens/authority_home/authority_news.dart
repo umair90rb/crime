@@ -42,71 +42,99 @@ class _AuthorityNewsState extends State<AuthorityNews> {
       ),
       child: Padding(
         padding: const EdgeInsets.all(10.0),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
+        child: Column(
           children: [
-            Column(
-              // mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.start,
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
-                Text(
-                  doc['subject'],
-                  style: TextStyle(
-                      fontSize: 20,
-                      color: Colors.black
-                  ),
-                ),
-                SizedBox(height: 25),
-                Text(
-                  doc['details'],
-                  style: TextStyle(
-                      fontSize: 16,
-                      color: Colors.grey
-                  ),
-                ),
-                SizedBox(height: 25),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                Column(
+                  // mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      "At ${createdAt.hour}:${createdAt.minute}",
+                      doc['subject'],
                       style: TextStyle(
-                          fontSize: 13,
-                          color: Colors.blueAccent
+                          fontSize: 20,
+                          color: Colors.black
                       ),
                     ),
-                    VerticalDivider(color: Colors.black, width: 1, thickness: 10,),
+                    SizedBox(height: 25),
                     Text(
-                      formattedDate,
+                      doc['details'],
                       style: TextStyle(
-                          fontSize: 13,
-                          color: Colors.blueAccent
+                          fontSize: 16,
+                          color: Colors.grey
                       ),
                     ),
-                    VerticalDivider(color: Colors.black, width: 1, thickness: 10,),
-                    Text(
-                      doc['status'],
-                      style: TextStyle(
-                          fontSize: 13,
-                          color: Colors.blueAccent
-                      ),
-                    ),
+                    SizedBox(height: 25),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      children: [
+                        Text(
+                          "At ${createdAt.hour}:${createdAt.minute}",
+                          style: TextStyle(
+                              fontSize: 13,
+                              color: Colors.blueAccent
+                          ),
+                        ),
+                        VerticalDivider(color: Colors.black, width: 1, thickness: 10,),
+                        Text(
+                          formattedDate,
+                          style: TextStyle(
+                              fontSize: 13,
+                              color: Colors.blueAccent
+                          ),
+                        ),
+                        VerticalDivider(color: Colors.black, width: 1, thickness: 10,),
+                        Text(
+                          doc['status'],
+                          style: TextStyle(
+                              fontSize: 13,
+                              color: Colors.blueAccent
+                          ),
+                        ),
 
+                      ],
+                    ),
                   ],
                 ),
+                SizedBox(height: 15),
+                Container(
+                  width: 125,
+                  height: 125,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(10),
+                      image: DecorationImage(
+                          fit: BoxFit.fill,
+                          image: NetworkImage(doc['photoUrl'])
+                      )
+                  ),
+                )
               ],
             ),
-            SizedBox(height: 15),
-            Container(
-              width: 125,
-              height: 125,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(10),
-                  image: DecorationImage(
-                      fit: BoxFit.fill,
-                      image: NetworkImage(doc['photoUrl'])
-                  )
-              ),
+            SizedBox(height: 10,),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: [
+                IconButton(
+                    color: Colors.blue,
+                    icon: Icon(Icons.thumb_up_alt_outlined),
+                    onPressed: (){
+
+                    }),
+                IconButton(
+                    color: Colors.green,
+                    icon: Icon(Icons.comment),
+                    onPressed: (){
+
+                    }),
+                IconButton(
+                    color: Colors.deepOrange,
+                    icon: Icon(Icons.share),
+                    onPressed: (){
+
+                    })
+              ],
             )
           ],
         ),

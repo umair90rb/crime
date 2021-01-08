@@ -100,9 +100,7 @@ class _AuthorityHomeState extends State<AuthorityHome> with AutomaticKeepAliveCl
         onTap: _onItemTapped,
         backgroundColor: Colors.grey,
       ),
-      body: Center(
-        child: _widgetOptions.elementAt(_selectedIndex),
-      ),
+      body: _widgetOptions.elementAt(_selectedIndex),
     );
   }
 }
