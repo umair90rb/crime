@@ -19,6 +19,7 @@ class _GetLocationFromMapState extends State<GetLocationFromMap> {
     super.initState();
   }
 
+
   _getLocation() async {
     Location location = new Location();
 

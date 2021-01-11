@@ -22,8 +22,6 @@ import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
 
 import '../../widget/heading.dart';
 
-import 'package:flutter/material.dart';
-
 class RegisterOtp extends StatefulWidget {
   final RegisterArguments arg;
   RegisterOtp({this.arg});
@@ -64,10 +62,10 @@ class _RegisterOtpState extends State<RegisterOtp> {
     }
   }
 
-  Future createProfile(RegisterArguments arg, dynamic avatar, dynamic id, String uid){
+  Future createProfile(RegisterArguments arg, dynamic avatar, dynamic id, String uid) async {
     print('profile');
     DocumentReference profile = FirebaseFirestore.instance.collection('profile').doc(uid);
-    return profile.set({
+    await profile.set({
       'type': 'public',
       'dob':arg.dob,
       'phone': arg.phone,
@@ -81,27 +79,30 @@ class _RegisterOtpState extends State<RegisterOtp> {
       'id': id,
       'avatar':avatar,
       'createdAt': arg.createdAt,
-      'status':'New'
-    }).then((value) async {
-      final prefs = await SharedPreferences.getInstance();
-      prefs.setString('profile', jsonEncode({
-        'type': 'public',
-        'phone': arg.phone,
-        'full_name': arg.fullName, // John Doe
-        'family_name': arg.familyName, // Stokes and Sons
-        'martial_status': arg.martialStatus,
-        'title': arg.title,
-        'next_of_kin': arg.nextToKin,
-        'email':arg.email,
-        'village': arg.village,
-        'id': id,
-        'avatar':avatar,
-        'createdAt': arg.createdAt,
-        'status':'New'
-      }));
-      print('user added');
-    })
-        .catchError((error) => print("Failed to add user: $error"));
+      'status':'New',
+      'package':'free'
+    });
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    await prefs.setString('profile', jsonEncode({
+      'type': 'public',
+      'phone': arg.phone,
+      'full_name': arg.fullName, // John Doe
+      'family_name': arg.familyName, // Stokes and Sons
+      'martial_status': arg.martialStatus,
+      'title': arg.title,
+      'next_of_kin': arg.nextToKin,
+      'email':arg.email,
+      'village': arg.village,
+      'id': id,
+      'dob':arg.dob,
+      'avatar':avatar,
+      'createdAt': arg.createdAt.toString(),
+      'status':'New',
+      'package':'free',
+    }));
+    String pro = await prefs.get('profile');
+    print(pro);
+    return;
   }
 
   bool loggedIn = false;

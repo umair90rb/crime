@@ -252,11 +252,27 @@ class _OtpState extends State<Otp> {
               dynamic profile = await FirebaseFirestore.instance
                   .collection('profile').doc(value.user.uid)
                   .get();
-              print(profile.data());
+              print(profile);
               final prefs = await SharedPreferences.getInstance();
-              prefs.setString('user', jsonEncode(value.user.uid));
-              prefs.setString('profile', jsonEncode(profile.data()));
-              prefs.setBool('isLoggedIn', true);
+              prefs.setString('user', value.user.uid);
+              await prefs.setString('profile', jsonEncode({
+                'type': profile['type'],
+                'phone': profile['phone'],
+                'dob':profile['dob'],
+                'full_name': profile['full_name'], // John Doe
+                'family_name': profile['family_name'], // Stokes and Sons
+                'martial_status': profile['martial_status'],
+                'title': profile['title'],
+                'next_of_kin': profile['next_of_kin'],
+                'email':profile['email'],
+                'village': profile['village'],
+                'id': profile['id'],
+                'avatar':profile['avatar'],
+                'createdAt': profile['createdAt'].toString(),
+                'status':profile['status'],
+                'package':profile['package'],
+              }));
+              await prefs.setBool('isLoggedIn', true);
               profile['type'] == 'police' || profile['type'] == 'security' ? Navigator.pushNamed(context, '/authorityHome') : Navigator.pushNamed(context, '/home');
               // setState(() {
               //   loggedIn = true;

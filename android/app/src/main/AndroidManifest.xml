@@ -10,7 +10,7 @@
         android:label="Abagana Security"
         android:icon="@mipmap/launcher_icon">
         <meta-data android:name="com.google.android.geo.API_KEY"
-            android:value="AIzaSyDxHNFRd6Wo-6xAyn5YKaBIbhocxrE0FyU"/>
+            android:value="AIzaSyAii2btH0d9Ep1Yego7zp6P9EEtbXxlXVI"/>
         <activity
             android:name=".MainActivity"
             android:launchMode="singleTop"

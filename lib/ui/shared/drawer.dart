@@ -1,3 +1,4 @@
+import 'package:community_support/main.dart';
 import 'package:flutter/material.dart';
 import 'dart:convert';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -18,17 +19,19 @@ class _AppDrawerState extends State<AppDrawer> {
   List drawer;
   List onTap;
 
-
-
   _getProfile() async {
-    final prefs = await SharedPreferences.getInstance();
-    String profile = prefs.getString('profile');
+    print('here');
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    dynamic profile = await prefs.get('profile');
+    print(profile);
     decodedProfile = jsonDecode(profile);
+    print(decodedProfile);
 
     icons = [
       Icons.person_outline,
       Icons.notifications_none,
       decodedProfile['type'] == 'security' || decodedProfile['type'] == 'police' ? Icons.check_box  : Icons.comment_bank_outlined,
+      Icons.chat,
       Icons.info_outlined,
       Icons.translate_outlined
     ];
@@ -38,26 +41,25 @@ class _AppDrawerState extends State<AppDrawer> {
       'My Profile',
       'Alerts',
       decodedProfile['type'] == 'security' || decodedProfile['type'] == 'police' ? 'Case Solved' : 'My Posts',
+      'Chat',
       'About Us',
       'Change Language'
     ];
 
     onTap = [
-          (){
-        Navigator.pushNamed(context, '/profile', arguments: decodedProfile);
-      },
+          (){Navigator.pushNamed(context, '/profile', arguments: decodedProfile);},
           (){},
-          (){
-        Navigator.pushNamed(context, decodedProfile['type'] == 'security' || decodedProfile['type'] == 'police' ? '/caseSolved' : '/myReports');
-      },
+          (){Navigator.pushNamed(context, decodedProfile['type'] == 'security' || decodedProfile['type'] == 'police' ? '/caseSolved' : '/myReports');},
+          (){ Navigator.pushNamed(context, '/chat');},
           (){},
-          (){}
+          (){ Navigator.pushNamed(context, '/language');}
     ];
     return true;
   }
 
   @override
   void initState() {
+    print('state');
     getProfile = _getProfile();
     super.initState();
   }
@@ -65,13 +67,14 @@ class _AppDrawerState extends State<AppDrawer> {
   @override
   Widget build(BuildContext context) {
 
+
     return FutureBuilder(
       future: getProfile,
       builder: (context, snapshot) {
         if(snapshot.hasData){
 
         return SizedBox(
-          width: 200,
+          width: MediaQuery.of(context).size.width*0.95,
           child: Drawer(
             elevation: 0.0,
             child: Column(
@@ -122,9 +125,9 @@ class _AppDrawerState extends State<AppDrawer> {
                 InkWell(
                   onTap: () async {
                     final prefs = await SharedPreferences.getInstance();
-                    prefs.remove('user');
-                    prefs.remove('profile');
-                    prefs.setBool('isLoggedIn', false);
+                    await prefs.remove('user');
+                    await prefs.remove('profile');
+                    await prefs.setBool('isLoggedIn', false);
                     print('logout');
                     Navigator.pushNamed(context, '/loginAs');
                   },
@@ -140,7 +143,17 @@ class _AppDrawerState extends State<AppDrawer> {
         );
 
         }
-        return Container();
+        return Drawer(
+          child: Column(
+            children: [
+              LinearProgressIndicator(
+                minHeight: 1.75,
+                backgroundColor: Colors.white,
+                valueColor: AlwaysStoppedAnimation<Color>(Colors.amber),
+              )
+            ],
+          ),
+        );
       }
     );
   }

@@ -41,6 +41,7 @@ class Bar extends StatelessWidget implements PreferredSizeWidget {
           splashColor: Colors.amber,
           onPressed: (){},
         ) : null ,
+
       ],
     );
   }

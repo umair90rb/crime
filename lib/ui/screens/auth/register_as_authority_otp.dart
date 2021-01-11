@@ -80,12 +80,13 @@ class _RegisterAuthorityOtpState extends State<RegisterAuthorityOtp> {
       'avatar':avatar,
       'id':id,
       'createdAt':arg.createdAt,
-      'status':'New'
+      'status':'New',
+      'package':'free'
     }).then((value) async {
       DocumentReference service = FirebaseFirestore.instance.collection('service').doc(arg.profileDocId);
       await service.delete();
       final prefs = await SharedPreferences.getInstance();
-      prefs.setString('profile', jsonEncode({
+      await prefs.setString('profile', jsonEncode({
         'family_name': arg.familyName,
         'dob': arg.dob,
         'martial_status': arg.martialStatus,
@@ -94,13 +95,14 @@ class _RegisterAuthorityOtpState extends State<RegisterAuthorityOtp> {
         'village':arg.village,
         'type': arg.type,
         'phone': arg.phone,
-        'full_name': arg.fullName, // John Doe
+        'full_name': arg.fullName,
         'email':arg.email,
         'service_no':arg.serviceNo,
         'avatar':avatar,
         'id':id,
-        'createdAt':arg.createdAt,
-        'status':'New'
+        'createdAt':arg.createdAt.toString(),
+        'status':'New',
+        'package':'free'
       }));
     })
         .catchError((error) => print("Failed to add user: $error"));
@@ -164,46 +166,54 @@ class _RegisterAuthorityOtpState extends State<RegisterAuthorityOtp> {
                 fontSize: 12,
               ),
 
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal:20.0),
-                child: PinPut(
-                  withCursor: true,
-                  fieldsCount: 6,
-                  controller: pin,
+              Form(
+                key: _formKey,
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal:20.0),
+                  child: PinPut(
+                    validator: (value){
+                      if(value.isEmpty){
+                        return "Pin is required!";
+                      }
+                      return null;
+                    },
+                    withCursor: true,
+                    fieldsCount: 6,
+                    controller: pin,
 
-                  keyboardType: TextInputType.number,
-                  eachFieldHeight: 50,
-                  eachFieldWidth: 50,
-                  eachFieldPadding: EdgeInsets.only(left: 5),
-                  submittedFieldDecoration: pinPutDecoration,
-                  selectedFieldDecoration: pinPutDecoration,
-                  followingFieldDecoration: pinPutDecoration,
-                  pinAnimationType: PinAnimationType.fade,
-                  onSubmit: (pin) async {
-                    print(pin);
-                    try {
-                      await FirebaseAuth.instance
-                          .signInWithCredential(PhoneAuthProvider.credential(
-                          verificationId: _verificationCode, smsCode: pin))
-                          .then((value) async {
-                        if (value.user != null) {
-                          dynamic url = await uploadFile(widget.arg.photo);
-                          dynamic id = await uploadFile(widget.arg.id);
-                          dynamic profile = await createProfile(widget.arg, url, id, value.user.uid);
-                          print(profile);
-                          final prefs = await SharedPreferences.getInstance();
-                          prefs.setString('user', jsonEncode(value.user.uid));
-                          prefs.setBool('isLoggedIn', true);
-                          Navigator.pushNamed(context, '/authorityHome');
-                        }
-                      });
-                    } catch (e) {
-                      print(e);
-                      FocusScope.of(context).unfocus();
-                      _scaffoldKey.currentState
-                          .showSnackBar(SnackBar(content: Text('Invalid OTP')));
-                    }
-                  },
+                    keyboardType: TextInputType.number,
+                    eachFieldHeight: 50,
+                    eachFieldWidth: 50,
+                    eachFieldPadding: EdgeInsets.only(left: 5),
+                    submittedFieldDecoration: pinPutDecoration,
+                    selectedFieldDecoration: pinPutDecoration,
+                    followingFieldDecoration: pinPutDecoration,
+                    pinAnimationType: PinAnimationType.fade,
+                    onSubmit: (pin) async {
+                      print(pin);
+                      try {
+                        await FirebaseAuth.instance
+                            .signInWithCredential(PhoneAuthProvider.credential(
+                            verificationId: _verificationCode, smsCode: pin))
+                            .then((value) async {
+                          if (value.user != null) {
+                            dynamic url = await uploadFile(widget.arg.photo);
+                            dynamic id = await uploadFile(widget.arg.id);
+                            dynamic profile = await createProfile(widget.arg, url, id, value.user.uid);
+                            final prefs = await SharedPreferences.getInstance();
+                            await prefs.setString('user', jsonEncode(value.user.uid));
+                            await prefs.setBool('isLoggedIn', true);
+                            Navigator.pushNamed(context, '/authorityHome');
+                          }
+                        });
+                      } catch (e) {
+                        print(e);
+                        FocusScope.of(context).unfocus();
+                        _scaffoldKey.currentState
+                            .showSnackBar(SnackBar(content: Text('Invalid OTP')));
+                      }
+                    },
+                  ),
                 ),
               ),
 
@@ -262,8 +272,8 @@ class _RegisterAuthorityOtpState extends State<RegisterAuthorityOtp> {
                           dynamic profile = await createProfile(widget.arg, url, id, value.user.uid);
                           print(profile);
                           final prefs = await SharedPreferences.getInstance();
-                          prefs.setString('user', jsonEncode(value.user.uid));
-                          prefs.setBool('isLoggedIn', true);
+                          await prefs.setString('user', jsonEncode(value.user.uid));
+                          await prefs.setBool('isLoggedIn', true);
                           Navigator.pushNamed(context, '/authorityHome');
                         }
                       });
@@ -309,8 +319,8 @@ class _RegisterAuthorityOtpState extends State<RegisterAuthorityOtp> {
           if(value.user != null){
             dynamic profile = await createProfile(widget.arg, url, id, value.user.uid);
             final prefs = await SharedPreferences.getInstance();
-            prefs.setString('user', jsonEncode(value.user.uid));
-            prefs.setBool('isLoggedIn', true);
+            await prefs.setString('user', jsonEncode(value.user.uid));
+            await prefs.setBool('isLoggedIn', true);
             Navigator.pushNamed(context, '/authorityHome');
           }
         });

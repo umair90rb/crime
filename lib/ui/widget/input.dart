@@ -13,8 +13,9 @@ class RoundedInput extends StatelessWidget {
   final bool elevation;
   final IconData preIcon;
   final int maxLines;
+  final Function onChanged;
 
-  RoundedInput({this.label = "", this.labelColor = Colors.black, this.borderRadius = 40, this.backgroundColor = Colors.white, this.obscureText = false, this.textInputType = TextInputType.text, @required this.controller, this.validation = false, this.pat = '.', this.elevation = false, this.preIcon, this.maxLines = 1});
+  RoundedInput({this.label = "", this.onChanged, this.labelColor = Colors.black, this.borderRadius = 40, this.backgroundColor = Colors.white, this.obscureText = false, this.textInputType = TextInputType.text, @required this.controller, this.validation = false, this.pat = '.', this.elevation = false, this.preIcon, this.maxLines = 1});
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -31,6 +32,7 @@ class RoundedInput extends StatelessWidget {
           ] : null ,
         ),
         child: TextFormField(
+          onChanged: onChanged,
           maxLines: maxLines,
           validator: (val){
             if(validation == false) {

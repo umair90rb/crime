@@ -1,5 +1,6 @@
 import 'dart:math';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:community_support/services/db_services.dart';
 import 'package:community_support/ui/widget/button.dart';
 import 'package:community_support/ui/widget/input_button.dart';
@@ -16,12 +17,24 @@ class _CodeState extends State<Code> {
   int code;
   DbServices db = DbServices();
   bool loading = false;
+  Future getCodes;
 
   generateCode(){
     Random random = Random.secure();
     return random.nextInt(99999999);
   }
 
+  getCode() async {
+   List<QueryDocumentSnapshot> serviceNo = await db.getSnapshot('service');
+   print(serviceNo);
+   return serviceNo;
+  }
+
+  @override
+  void initState() {
+    getCodes = getCode();
+    super.initState();
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -77,6 +90,26 @@ class _CodeState extends State<Code> {
                   loading = false;
                 });
               },
+          ),
+
+          SizedBox(height: 20,),
+
+          SingleChildScrollView(
+            child: FutureBuilder(
+              future: getCodes,
+              builder: (context, snapshot){
+                if(snapshot.hasData){
+                  List<QueryDocumentSnapshot> list = snapshot.data;
+                  return Column(
+                   children: list.map((element) { return Center(child: Text(element['service_no'].toString()),);}).toList(),
+                 );
+                }
+                if(snapshot.hasError){
+                  return Center(child: Text('${snapshot.error}'),);
+                }
+                return Center(child: CircularProgressIndicator(valueColor: AlwaysStoppedAnimation<Color>(Colors.amber),),);
+              },
+            ),
           )
 
 

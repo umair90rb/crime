@@ -1,6 +1,7 @@
 import 'package:community_support/ui/widget/full_row.dart';
 import 'package:community_support/ui/widget/heading.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:core';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:share/share.dart';
@@ -91,6 +92,18 @@ class _SettingState extends State<Setting> {
               text: 'Privacy Policy',
               icon: Icons.lock_open,
               onTap: () => Navigator.pushNamed(context, '/privacy'),
+            ),
+            FullWidget(
+              text: 'Logout',
+              icon: Icons.logout,
+              onTap: () async {
+                final prefs = await SharedPreferences.getInstance();
+                await prefs.remove('user');
+                await prefs.remove('profile');
+                await prefs.setBool('isLoggedIn', false);
+                print('logout');
+                Navigator.pushNamed(context, '/loginAs');
+              }
             ),
 
 

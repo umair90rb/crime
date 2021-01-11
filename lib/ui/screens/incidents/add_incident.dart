@@ -52,13 +52,21 @@ class _AddIncidentState extends State<AddIncident> {
     'child',
     'bulg',
     'murder',
+    'sex',
+    'stalking',
+    'robbery',
+    'violence'
   ];
 
   List<String> crime = [
     'Inturders',
     'Child Abuse',
     'Bulgery',
-    'Murder'
+    'Murder',
+    'Sexual Assault',
+    'Stalking',
+    'Robbery',
+    'Domestic Violence'
   ];
 
 
@@ -157,7 +165,7 @@ class _AddIncidentState extends State<AddIncident> {
               child: ListView.builder(
                 padding: EdgeInsets.all(5),
                 scrollDirection: Axis.horizontal,
-                itemCount: 4,
+                itemCount: crime.length,
                 itemBuilder: (context, i){
                   return InkWell(
                     onTap: (){

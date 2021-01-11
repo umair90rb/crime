@@ -126,6 +126,8 @@ class _AddNewsState extends State<AddNews> {
                     'photoUrl':photoUrl,
                     'status':'Pending',
                     'views':0,
+                    'likes':0,
+                    'comments':[],
                     'createdAt': createdAt.toString(),
                   });
                   if(dataInserted){

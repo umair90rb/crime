@@ -1,3 +1,4 @@
+import 'package:community_support/localization/demo_localization.dart';
 import 'package:community_support/ui/screens/home/news.dart';
 import 'package:community_support/ui/screens/home/report.dart';
 import 'package:community_support/ui/screens/setting/setting.dart';
@@ -18,13 +19,18 @@ class _HomeState extends State<Home> with AutomaticKeepAliveClientMixin{
   GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
   int _selectedIndex = 0;
+  List<Widget> _widgetOptions;
 
-  List<Widget> _widgetOptions = <Widget>[
-    Map(),
-    Report(),
-    News(),
-    Setting()
-  ];
+  @override
+  void initState() {
+    _widgetOptions = <Widget>[
+      Map(_scaffoldKey),
+      Report(),
+      News(),
+      Setting()
+    ];
+    super.initState();
+  }
 
 
 
@@ -39,12 +45,6 @@ class _HomeState extends State<Home> with AutomaticKeepAliveClientMixin{
   bool get wantKeepAlive => true;
 
 
-  List<String> title = [
-    'ABAGANA SECURITY',
-    'REPORTS',
-    'NEWS',
-    'SETTING'
-  ];
 
   List<String> navigation = [
     'Map',
@@ -63,6 +63,13 @@ class _HomeState extends State<Home> with AutomaticKeepAliveClientMixin{
 
   @override
   Widget build(BuildContext context) {
+    List<String> title = [
+      'ABAGANA SECURITY',
+      'REPORT',
+      'NEWS',
+      'SETTING'
+    ];
+
     super.build(context);
     return Scaffold(
       key: _scaffoldKey,
@@ -72,6 +79,7 @@ class _HomeState extends State<Home> with AutomaticKeepAliveClientMixin{
       ),
       drawer: AppDrawer(),
       floatingActionButton: _selectedIndex == 3 ? null :FloatingActionButton(
+        heroTag: 'btn1',
         onPressed: () => Navigator.pushNamed(context, '/reportIncident'),
         backgroundColor: Colors.red,
         child: Icon(
