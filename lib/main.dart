@@ -6,6 +6,8 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'dart:convert';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:connectivity/connectivity.dart';
+import 'global.dart' as global;
 
 
 void main() async {
@@ -15,9 +17,10 @@ void main() async {
   final bool isLoggedIn = prefs.getBool('isLoggedIn') ?? false;
   print(isLoggedIn);
   String profile = await prefs.get('profile') ?? '';
-  print('profile $profile');
+  global.uid = await prefs.get('uid');
   final Map<String, dynamic> decoded = profile == '' ? Map() : jsonDecode(profile);
-  print(decoded);
+  global.profile = decoded;
+
   runApp(MyApp(isLoggedIn, decoded));
 }
 
@@ -46,6 +49,21 @@ class _MyAppState extends State<MyApp> {
     });
   }
 
+
+  checkConnectivity() async {
+    var connectivityResult = await (Connectivity().checkConnectivity());
+    if (connectivityResult == ConnectivityResult.mobile || connectivityResult == ConnectivityResult.wifi) {
+      return;
+    }
+    Navigator.pushNamed(context, '/noInternet');
+  }
+
+  @override
+  void initState() {
+    checkConnectivity();
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -71,7 +89,7 @@ class _MyAppState extends State<MyApp> {
         },
         debugShowCheckedModeBanner: false,
       routes: routes,
-      initialRoute: widget.isLoggedIn ? (widget.profile['type'] == 'security' || widget.profile['type'] == 'police' ? '/authorityHome' : '/home') : '/loginAs' ,
+      initialRoute : widget.isLoggedIn ? (widget.profile['type'] == 'security' || widget.profile['type'] == 'police' ? '/authorityHome' : '/home') : '/loginAs' ,
     );
   }
 }

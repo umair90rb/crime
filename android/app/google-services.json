@@ -1,33 +1,41 @@
 {
   "project_info": {
-    "project_number": "330896103299",
-    "project_id": "communitysupportapp",
-    "storage_bucket": "communitysupportapp.appspot.com"
+    "project_number": "847367147752",
+    "project_id": "abgana-security",
+    "storage_bucket": "abgana-security.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:330896103299:android:0bcc73e7d99a58ba4f88b6",
+        "mobilesdk_app_id": "1:847367147752:android:0f51e7a8e9d37e0205f95d",
         "android_client_info": {
-          "package_name": "com.base.community_support"
+          "package_name": "com.abgana.security"
         }
       },
       "oauth_client": [
         {
-          "client_id": "330896103299-vopac6kj1gjijkr4glme2oin0vpgf3qd.apps.googleusercontent.com",
+          "client_id": "847367147752-4ruj9dp1sjjqptr0725027revi247at4.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.abgana.security",
+            "certificate_hash": "8ee1fa6954ee422babc9fb218e540851ddf6e527"
+          }
+        },
+        {
+          "client_id": "847367147752-b4g23u8pm52s4pn7o6hc7c53c500l3sg.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyBHG2wASq4U_iTDd4DQi-ZTNHNVf2NimoM"
+          "current_key": "AIzaSyCmxIH4Gzbkcu0cAC__27gemlyf018tAkk"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "330896103299-vopac6kj1gjijkr4glme2oin0vpgf3qd.apps.googleusercontent.com",
+              "client_id": "847367147752-b4g23u8pm52s4pn7o6hc7c53c500l3sg.apps.googleusercontent.com",
               "client_type": 3
             }
           ]

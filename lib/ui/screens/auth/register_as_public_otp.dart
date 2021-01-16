@@ -11,6 +11,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 import 'dart:ui';
+import 'package:community_support/global.dart' as global;
 
 import 'package:community_support/ui/widget/button.dart';
 import 'package:community_support/ui/widget/link.dart';
@@ -83,7 +84,8 @@ class _RegisterOtpState extends State<RegisterOtp> {
       'package':'free'
     });
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    await prefs.setString('profile', jsonEncode({
+    Map<String, dynamic> p = {
+      'uid': uid,
       'type': 'public',
       'phone': arg.phone,
       'full_name': arg.fullName, // John Doe
@@ -99,7 +101,9 @@ class _RegisterOtpState extends State<RegisterOtp> {
       'createdAt': arg.createdAt.toString(),
       'status':'New',
       'package':'free',
-    }));
+    };
+    await prefs.setString('profile', jsonEncode(p));
+    global.profile = p;
     String pro = await prefs.get('profile');
     print(pro);
     return;

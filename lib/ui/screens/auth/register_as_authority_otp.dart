@@ -21,8 +21,7 @@ import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
 
 
 import '../../widget/heading.dart';
-
-import 'package:flutter/material.dart';
+import 'package:community_support/global.dart' as global;
 
 class RegisterAuthorityOtp extends StatefulWidget {
   final RegisterAuthorityArguments arg;
@@ -86,7 +85,8 @@ class _RegisterAuthorityOtpState extends State<RegisterAuthorityOtp> {
       DocumentReference service = FirebaseFirestore.instance.collection('service').doc(arg.profileDocId);
       await service.delete();
       final prefs = await SharedPreferences.getInstance();
-      await prefs.setString('profile', jsonEncode({
+      Map<String, dynamic> pro = {
+        'uid': uid,
         'family_name': arg.familyName,
         'dob': arg.dob,
         'martial_status': arg.martialStatus,
@@ -103,7 +103,9 @@ class _RegisterAuthorityOtpState extends State<RegisterAuthorityOtp> {
         'createdAt':arg.createdAt.toString(),
         'status':'New',
         'package':'free'
-      }));
+      };
+      await prefs.setString('profile', jsonEncode(pro));
+      global.profile = pro;
     })
         .catchError((error) => print("Failed to add user: $error"));
   }

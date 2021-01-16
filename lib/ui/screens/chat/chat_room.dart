@@ -5,6 +5,12 @@ import '../../../models/thread.dart';
 import './send_message_bar.dart';
 
 class ChatRoom extends StatefulWidget {
+  final String uid;
+  final String peerId;
+  final String avatar;
+  final String name;
+
+  ChatRoom({this.uid, this.peerId, this.name, this.avatar});
   @override
   _ChatRoomState createState() => _ChatRoomState();
 }
@@ -79,7 +85,7 @@ class _ChatRoomState extends State<ChatRoom> with TickerProviderStateMixin {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Color(0xFFECE5DD),
-      appBar: buildChatRoomAppBar(Icon(Icons.person), 'Alice'),
+      appBar: buildChatRoomAppBar(ClipOval(child: Image.network(widget.avatar),), widget.name),
       body: Center(
         child: Column(
           children: <Widget>[

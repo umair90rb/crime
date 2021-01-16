@@ -1,11 +1,18 @@
+import 'dart:convert';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:community_support/services/db_services.dart';
+import 'package:community_support/ui/widget/button.dart';
+import 'package:community_support/ui/widget/input.dart';
 import 'package:community_support/ui/widget/input_card.dart';
+import 'package:community_support/global.dart' as global;
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:like_button/like_button.dart';
 import 'package:share/share.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 
 class News extends StatefulWidget {
@@ -17,6 +24,7 @@ class _NewsState extends State<News> with SingleTickerProviderStateMixin {
 
   DbServices db = DbServices();
   Future getNewses;
+  GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   getNews() async {
     List<QueryDocumentSnapshot> snapshot = await db.getSnapshot('news');
     return snapshot;
@@ -122,6 +130,68 @@ class _NewsState extends State<News> with SingleTickerProviderStateMixin {
                     color: Colors.green,
                     icon: Icon(Icons.comment),
                     onPressed: () {
+                      TextEditingController comment = TextEditingController();
+                      return showModalBottomSheet(
+                            context: context,
+                            isScrollControlled: true,
+                            isDismissible: true,
+                            backgroundColor: Colors.white,                        builder: (context) {
+                          return DraggableScrollableSheet(
+                            expand: false,
+                            maxChildSize: 0.8,
+                            minChildSize: 0.2,
+                            initialChildSize: 0.6,
+                            builder: (context, scrollController){
+                              return Column(
+                                children: [
+                                  RoundedInput(
+                                    controller: comment,
+                                    elevation: true,
+                                    label: 'Your Comment',
+                                  ),
+                                  RoundedButton(
+                                      label: 'Add Comment',
+                                      onPressed: () async {
+
+                                        await db.updateDoc('news', doc.id, {
+                                          'comments': FieldValue.arrayUnion([{'avatar': global.profile['avatar'],'comment':comment.text,'uid':global.profile['uid']}])
+                                        }).then((value){
+                                          comment.text = '';
+                                          Fluttertoast.showToast(
+                                              msg: "Comment added",
+                                          );
+                                        });
+                                      }),
+                                  Divider(),
+                                  ListView.builder(
+                                    shrinkWrap: true,
+                                    itemCount: doc['comments'].length,
+                                    itemBuilder: (context, i){
+                                      return Padding(
+                                        padding: const EdgeInsets.symmetric(vertical:8.0),
+                                        child: ListTile(
+                                          title: Text(doc['comments'][i]['comment']),
+                                          leading: Material(
+                                            borderRadius: BorderRadius.circular(30),
+                                            elevation: 4,
+                                            child: CircleAvatar(
+                                              radius: 30,
+                                              backgroundColor: Colors.transparent,
+                                              child: ClipOval(
+                                                child: Image.network(doc['comments'][i]['avatar']),
+                                              ),
+                                            ),
+                                          ),
+
+                                        ),
+                                      );
+                                    },
+                                  )
+                                ],
+                              );
+                            },
+                          );
+                        });
                         return showCupertinoDialog(context: context, builder: (context){
                           TextEditingController comment = TextEditingController();
                           return InputCard(

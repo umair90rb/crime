@@ -143,8 +143,39 @@ class _MapState extends State<Map> with AutomaticKeepAliveClientMixin {
         child: Stack(
           children: [
             GoogleMap(
+              cameraTargetBounds: CameraTargetBounds(LatLngBounds(
+                southwest: LatLng(6.185123, 6.979588),
+                northeast: LatLng(6.185123, 6.979588),
+              )),
               onMapCreated: _onMapCreated,
               zoomControlsEnabled: false,
+              minMaxZoomPreference: MinMaxZoomPreference(14, 22),
+              polygons: {Polygon(
+                polygonId: PolygonId('polygonId-1'),
+                strokeColor: Colors.amber,
+                fillColor: Colors.amber.withOpacity(0.1),
+                strokeWidth: 1,
+                consumeTapEvents: false,
+                points: [
+                  LatLng(6.179510059819319, 6.970267158202389),
+                  LatLng(6.1820700127132255, 6.96477399417048),
+                  LatLng(6.186720562103059, 6.96421609469849),
+                  LatLng(6.195424232636653, 6.974773269322314),
+                  LatLng(6.194826926498322, 6.979408126474235),
+                  LatLng(6.192992339133419, 6.9857166820421295),
+                  LatLng(6.192181705476437, 6.98987947041006),
+                  LatLng(6.190603099520868, 6.993312697930001),
+                  LatLng(6.184501956487073, 6.991767745546028),
+                  LatLng(6.181515357304056, 6.991724830202029),
+                  LatLng(6.1766087649022134, 6.985244613258137),
+                  LatLng(6.172376458923486, 6.981584551059295),
+                  LatLng(6.171831702983077, 6.979592070784831),
+                  LatLng(6.171930749559358, 6.976952034421168),
+                  LatLng(6.173416445981544, 6.974262186050643),
+                  LatLng(6.179408712576684, 6.970277225501715),
+                  LatLng(6.1794582351585, 6.970277225501715),
+                ]
+              )},
               myLocationEnabled: false,
               circles: circle == null ? {} : {circle},
               markers: markers.isEmpty ? {} : markers.toSet(),

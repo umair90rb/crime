@@ -11,10 +11,15 @@ import 'package:community_support/ui/widget/date_button.dart';
 import 'package:community_support/ui/widget/input_button.dart';
 import 'package:community_support/ui/widget/res_card.dart';
 import 'package:community_support/ui/widget/time_button.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:permission_handler/permission_handler.dart' as permission;
+import 'package:record_mp3/record_mp3.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+
+import 'package:path_provider/path_provider.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:location/location.dart';
@@ -35,6 +40,10 @@ class _AddIncidentState extends State<AddIncident> {
   DateTime reportingUserDateTime = DateTime.now();
   TimeOfDay reportingUserTime = TimeOfDay.now();
   var userLocation;
+  String statusText = "";
+  String recordLabel = 'Record Voice';
+  bool isComplete = false;
+  bool isRecording = false;
 
   GoogleMapController mapController;
   var add;
@@ -255,14 +264,10 @@ class _AddIncidentState extends State<AddIncident> {
                     style: TextStyle(decoration: TextDecoration.underline),),),
             FlatButton.icon(
                 onPressed: () async {
-                  File v = await chooseImage(_scaffoldKey);
-                  setState(() {
-                    voiceRecording = v;
-                  });
-                  print(voiceRecording.path);
+                    isRecording ? stopRecord() : startRecord();
                 },
                 icon: Icon(Icons.mic),
-                label: Text('Add Voice Recording',
+                label: Text(recordLabel+statusText+(!isComplete ? '' : '(Exporting)'),
                     style: TextStyle(decoration: TextDecoration.underline),),),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 10),
@@ -287,9 +292,6 @@ class _AddIncidentState extends State<AddIncident> {
                   String profile = prefs.getString('profile');
                   Map<String, dynamic> decodedProfile = jsonDecode(profile);
                   uid = uid.replaceAll('"', '');
-                  // print(uid);
-                  // return;
-
                   String photoUrl = photo == null ? '' : await db.uploadFile('crimeFile', photo);
                   String voiceUrl = voiceRecording == null ? '' :  await db.uploadFile('crimeFile', voiceRecording);
                   bool dataInserted = await db.addData('crimes',{
@@ -337,4 +339,60 @@ class _AddIncidentState extends State<AddIncident> {
       ),
     );
   }
+
+  Future<bool> checkPermission() async {
+    if (!await permission.Permission.microphone.isGranted) {
+      permission.PermissionStatus status = await permission.Permission.microphone.request();
+      if (status != permission.PermissionStatus.granted) {
+        return false;
+      }
+    }
+    return true;
+  }
+
+  void startRecord() async {
+    bool hasPermission = await checkPermission();
+    if (hasPermission) {
+      isRecording = true;
+      recordLabel = '';
+      statusText = "Recording(tap to stop)";
+      recordFilePath = await getFilePath();
+      isComplete = false;
+      RecordMp3.instance.start(recordFilePath, (type) {
+        statusText = "Record error--->$type";
+        setState(() {});
+      });
+    } else {
+      statusText = "No microphone permission";
+    }
+    setState(() {});
+  }
+
+  void stopRecord() async {
+    bool s = RecordMp3.instance.stop();
+    if (s) {
+      isRecording = false;
+      statusText = "";
+      recordLabel = 'Record Voice';
+      RecordMp3.instance.status == RecordStatus.IDEL ? isComplete = false : isComplete = true ;
+      voiceRecording = File(recordFilePath);
+      setState(() {});
+    }
+  }
+
+  String recordFilePath;
+  String filename;
+
+  Future<String> getFilePath() async {
+    filename = "${DateTime.now().millisecond}";
+    print(filename);
+    Directory storageDirectory = await getApplicationDocumentsDirectory();
+    String sdPath = storageDirectory.path + "/record";
+    var d = Directory(sdPath);
+    if (!d.existsSync()) {
+      d.createSync(recursive: true);
+    }
+    return sdPath + "/${filename}.mp3";
+  }
+
 }

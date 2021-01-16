@@ -10,6 +10,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
+import 'package:community_support/global.dart' as global;
 
 import '../../widget/heading.dart';
 
@@ -255,7 +256,8 @@ class _OtpState extends State<Otp> {
               print(profile);
               final prefs = await SharedPreferences.getInstance();
               prefs.setString('user', value.user.uid);
-              await prefs.setString('profile', jsonEncode({
+              Map<String, dynamic> pro = {
+                'uid': value.user.uid,
                 'type': profile['type'],
                 'phone': profile['phone'],
                 'dob':profile['dob'],
@@ -271,8 +273,10 @@ class _OtpState extends State<Otp> {
                 'createdAt': profile['createdAt'].toString(),
                 'status':profile['status'],
                 'package':profile['package'],
-              }));
+              };
+              await prefs.setString('profile', jsonEncode(pro));
               await prefs.setBool('isLoggedIn', true);
+              global.profile = pro;
               profile['type'] == 'police' || profile['type'] == 'security' ? Navigator.pushNamed(context, '/authorityHome') : Navigator.pushNamed(context, '/home');
               // setState(() {
               //   loggedIn = true;

@@ -1,4 +1,6 @@
 import 'package:community_support/main.dart';
+import 'package:community_support/ui/screens/chat/chat_list.dart';
+import 'package:community_support/ui/screens/profile/profile.dart';
 import 'package:flutter/material.dart';
 import 'dart:convert';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -47,11 +49,11 @@ class _AppDrawerState extends State<AppDrawer> {
     ];
 
     onTap = [
-          (){Navigator.pushNamed(context, '/profile', arguments: decodedProfile);},
-          (){},
+          (){Navigator.push(context, MaterialPageRoute(builder: (context) => Profile(arg: decodedProfile)));},
+          (){Navigator.pushNamed(context, '/alert');},
           (){Navigator.pushNamed(context, decodedProfile['type'] == 'security' || decodedProfile['type'] == 'police' ? '/caseSolved' : '/myReports');},
-          (){ Navigator.pushNamed(context, '/chat');},
-          (){},
+          (){Navigator.push(context, MaterialPageRoute(builder: (context) => ChatList(decodedProfile['uid'])));},
+          (){Navigator.pushNamed(context, '/about');},
           (){ Navigator.pushNamed(context, '/language');}
     ];
     return true;

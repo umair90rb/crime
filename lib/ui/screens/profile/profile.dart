@@ -24,12 +24,17 @@ import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
 
 class Profile extends StatefulWidget {
+  final Map<String, dynamic> arg;
+
+  Profile({@required this.arg});
 
   @override
   _ProfileState createState() => _ProfileState();
 }
 
 class _ProfileState extends State<Profile> {
+
+
 
   DbServices db = DbServices();
 
@@ -60,25 +65,37 @@ class _ProfileState extends State<Profile> {
     );
     return cropped;
   }
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+
+  TextEditingController fullName;
+  TextEditingController familyName;
+  String martialStatus;
+  String village;
+  String title;
+  String pDob;
+  TextEditingController nextOfKin;
+  TextEditingController phone;
+  TextEditingController email;
+  DateTime dob;
+
+  @override
+  void initState() {
+    email = TextEditingController(text: widget.arg['email']);
+    phone = TextEditingController(text: widget.arg['phone']);
+    nextOfKin = TextEditingController(text: widget.arg['next_of_kin']);
+    pDob = widget.arg['dob'];
+    title = widget.arg['title'];
+    village = widget.arg['village'];
+    martialStatus = widget.arg['martial_status'];
+    familyName = TextEditingController(text: widget.arg['family_name']);
+    fullName = TextEditingController(text: widget.arg['full_name']);
+    super.initState();
+  }
 
 
   @override
   Widget build(BuildContext context) {
-    Map<String, dynamic> arg = ModalRoute.of(context).settings.arguments;
-
-
-    final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
-    final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-    final TextEditingController fullName = TextEditingController(text: arg['full_name']);
-    final TextEditingController familyName = TextEditingController(text: arg['family_name']);
-    String martialStatus = arg['martial_status'];
-    String village = arg['village'];
-    String title = arg['title'];
-    final TextEditingController nextOfKin = TextEditingController(text: arg['next_of_kin']);
-    final TextEditingController phone = TextEditingController(text: arg['phone']);
-    final TextEditingController email = TextEditingController(text: arg['email']);
-    DateTime dob;
-
 
     return Scaffold(
       key: _scaffoldKey,
@@ -105,7 +122,7 @@ class _ProfileState extends State<Profile> {
                   radius: 50,
                   backgroundColor: Colors.transparent,
                   child: ClipOval(
-                    child: Image.network(arg['avatar']),
+                    child: Image.network(widget.arg['avatar']),
                   ),
                 ),
               ),
@@ -133,14 +150,14 @@ class _ProfileState extends State<Profile> {
                 selectedDate: dob,
                 themeColor: Colors.amber,
                 labelColor: Colors.white,
-                label: dob == null ? arg['dob'] : "${dob.day}/${dob.month}/${dob.year}",
+                label: pDob,
                 backgroundColor: Colors.black45,
                 onDateSelect: (value){
                   print(value);
-                  setState(() {
-                    dob = value;
-                  });
-                  print('${dob.day}/${dob.month}/${dob.year}');
+                  dob = value;
+                  pDob = "${dob.day}/${dob.month}/${dob.year}";
+                  setState(() {});
+                  print(pDob);
                 },
               ),
 
@@ -287,35 +304,39 @@ class _ProfileState extends State<Profile> {
               RoundedButton(
                 label: 'Update',
                 onPressed: () async {
-                  if(_formKey.currentState.validate()
-                      && title != null
-                      && village != null
-                      // && photo != null
-                      // && id != null
-                  ){
-                    final prefs = await SharedPreferences.getInstance();
-                    String uid = prefs.getString('user');
-                    uid = uid.replaceAll('"', '');
+                  print("title $title, village $village");
+                  if(_formKey.currentState.validate()){
+                    print("$title $village");
+                    if(title != null && village != null){
+                      final prefs = await SharedPreferences.getInstance();
+                      String uid = await prefs.get('user');
+                      uid = uid.replaceAll('"', '');
+                      print(uid);
+                      await db.updateDoc('profile', uid, {
+                        'full_name': fullName.text,
+                        'family_name': familyName.text,
+                        'dob': pDob,
+                        'martial_status': martialStatus,
+                        'title': title,
+                        'next_of_kin': nextOfKin.text,
+                        'phone': phone.text,
+                        'email': email.text,
+                        'village': village,
+                      });
+                      return _scaffoldKey.currentState.showSnackBar(
+                          SnackBar(
+                            content: Text('Profile updated.'),
 
-                    db.updateDoc('profile', uid, {
-                      'full_name': fullName.text,
-                      'family_name': familyName.text,
-                      'dob': dob == null ? arg['dob'] : "${dob.day}/${dob.month}/${dob.year}",
-                      'martial_status': martialStatus,
-                      'title': title,
-                      'next_to_kin': nextOfKin.text,
-                      'phone': phone.text,
-                      'email': email.text,
-                      'village': village,
-                    });
+                          )
+                      );
+                    }
+                    _scaffoldKey.currentState.showSnackBar(
+                        SnackBar(
+                          content: Text('Please fill all fields and add images also!'),
 
+                        )
+                    );
                   }
-                  _scaffoldKey.currentState.showSnackBar(
-                      SnackBar(
-                        content: Text('Please fill all fields and add images also!'),
-
-                      )
-                  );
                 },
               ),
 

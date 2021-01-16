@@ -19,9 +19,9 @@ class _SendMessageBarState extends State<SendMessageBar> {
 
     // deal with local first
     _textController.clear();
-    // setState(() {
-    //   _showMic = true;
-    // });
+    setState(() {
+      _showMic = true;
+    });
 
     // deal with parent later
     widget._handleSubmitted(text);
@@ -54,7 +54,7 @@ class _SendMessageBarState extends State<SendMessageBar> {
           GestureDetector(
             onTap: _handleSubmittedLocal,
             child: CircleAvatar(
-              child: Icon(_showMic ? Icons.mic : Icons.send),
+              child: Icon(_showMic ? Icons.mic : Icons.send, size: 16,),
             ),
           ),
         ],

@@ -15,15 +15,15 @@ class _SettingState extends State<Setting> {
 
   final Uri _sendEmail = Uri(
       scheme: 'mailto',
-      // path: 'smith@example.com',
-      // queryParameters: {
-      //   'subject': 'Example Subject & Symbols are allowed!'
-      // }
+      path: 'saftyapps@gmail.com',
+      queryParameters: {
+        'subject': 'Abgana Security app user review'
+      }
   );
 
   final Uri _writeUs = Uri(
     scheme: 'mailto',
-    // path: 'smith@example.com',
+    path: 'saftyapps@gmail.com',
     queryParameters: {
       'subject': 'Write Us your opinion and reviews'
     }
@@ -65,13 +65,13 @@ class _SettingState extends State<Setting> {
             FullWidget(
               text: 'Rate App',
               icon: Icons.thumb_up,
-              onTap: () => Share.share('https://play.google.com/store/apps'),
+              onTap: () => launch('https://play.google.com/store/apps/details?id=com.abgana.security'),
             ),
 
             FullWidget(
               text: 'Share App',
               icon: Icons.share,
-              onTap: () => Share.share('https://play.google.com/store/apps'),
+              onTap: () => Share.share('https://play.google.com/store/apps/details?id=com.abgana.security'),
             ),
 
             FullWidget(

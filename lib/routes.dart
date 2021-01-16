@@ -1,5 +1,7 @@
+import 'package:community_support/ui/screens/about/about.dart';
 import 'package:community_support/ui/screens/admin/code/code.dart';
 import 'package:community_support/ui/screens/admin/home/admin_home.dart';
+import 'package:community_support/ui/screens/alert/alert.dart';
 import 'package:community_support/ui/screens/auth/login.dart';
 import 'package:community_support/ui/screens/auth/login_as.dart';
 import 'package:community_support/ui/screens/auth/register_as.dart';
@@ -24,6 +26,7 @@ import 'package:community_support/ui/screens/admin/reports/all_reports.dart';
 import 'package:flutter/material.dart';
 import './ui/screens/profile/profile.dart';
 import './ui/screens/my_reports/my_reports.dart';
+import 'ui/screens/chat/add_chat_room.dart';
 
 
   final routes = <String, WidgetBuilder>{
@@ -44,13 +47,13 @@ import './ui/screens/my_reports/my_reports.dart';
 
     '/authorityHome': (BuildContext context) => AuthorityHome(),
 
-    '/chat': (BuildContext context) => ChatList(),
 
     '/caseSolved': (BuildContext context) => CaseSolved(),
     '/addNews': (BuildContext context) => AddNews(),
 
     '/terms': (BuildContext context) => Terms(),
     '/privacy': (BuildContext context) => Privacy(),
+    '/about': (BuildContext context) => About(),
 
     '/setting': (BuildContext context) => Setting(),
     '/language': (BuildContext context) => Language(),
@@ -66,6 +69,8 @@ import './ui/screens/my_reports/my_reports.dart';
     '/allReports': (BuildContext context) => AllReports(),
 
     '/code': (BuildContext context) => Code(),
+
+    '/alert': (BuildContext context) => Alert(),
 
   };
 

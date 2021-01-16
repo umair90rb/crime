@@ -85,20 +85,25 @@ class _UpgradeToProState extends State<UpgradeToPro> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 RoundedButton(
-                  width: 30,
+                  width: 20,
                   borderRadius: 5,
                     label: 'Privacy Policy',
-                    onPressed: (){},
+                    onPressed: (){
+                    Navigator.pushNamed(context, '/privacy');
+                    },
                 ),
                 SizedBox(width: 10,),
                 RoundedButton(
-                  width: 30,
+                  width: 20,
                     borderRadius: 5,
                     label: 'Terms of Use',
-                    onPressed: (){},
+                    onPressed: (){
+                      Navigator.pushNamed(context, '/terms');
+                    },
                 ),
               ],
             ),
+            SizedBox(height: 20,)
           ],
         ),
       ),
