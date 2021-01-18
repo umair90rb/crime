@@ -30,7 +30,7 @@ class _ChatRoomState extends State<ChatRoom> with TickerProviderStateMixin {
     return ct;
   }
 
-  Widget _buildMessageDisplay() {
+  Widget s_buildMessageDisplay() {
     return ListView.builder(
       itemCount: _chatThreads.length,
       reverse: true,
