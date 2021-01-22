@@ -28,49 +28,31 @@ import './ui/screens/profile/profile.dart';
 import './ui/screens/my_reports/my_reports.dart';
 import 'ui/screens/chat/add_chat_room.dart';
 
-
-  final routes = <String, WidgetBuilder>{
-    '/splash': (BuildContext context) => Splash(),
-
-    '/loginAs': (BuildContext context) => LoginAs(),
-    '/registerAs': (BuildContext context) => RegisterAs(),
-
-    '/login': (BuildContext context) => Login(),
-
-    '/registerAsPublic': (BuildContext context) => RegisterAsPublic(),
-    '/registerAsAuthority': (BuildContext context) => RegisterAsAuthority(),
-    '/registerAsAuthorityAs': (BuildContext context) => RegisterAsAuthorityAs(),
-
-    '/home': (BuildContext context) => Home(),
-    '/reportIncident': (BuildContext context) => AddIncident(),
-    '/myReports': (BuildContext context) => MyReports(),
-
-    '/authorityHome': (BuildContext context) => AuthorityHome(),
-
-
-    '/caseSolved': (BuildContext context) => CaseSolved(),
-    '/addNews': (BuildContext context) => AddNews(),
-
-    '/terms': (BuildContext context) => Terms(),
-    '/privacy': (BuildContext context) => Privacy(),
-    '/about': (BuildContext context) => About(),
-
-    '/setting': (BuildContext context) => Setting(),
-    '/language': (BuildContext context) => Language(),
-
-    '/upgradeToPro': (BuildContext context) => UpgradeToPro(),
-    '/profile': (BuildContext context) => Profile(),
-
-    '/admin': (BuildContext context) => AdminHome(),
-
-    '/allNews': (BuildContext context) => AllNews(),
-    '/newsView': (BuildContext context) => NewsView(),
-
-    '/allReports': (BuildContext context) => AllReports(),
-
-    '/code': (BuildContext context) => Code(),
-
-    '/alert': (BuildContext context) => Alert(),
-
-  };
-
+final routes = <String, WidgetBuilder>{
+  '/splash': (BuildContext context) => Splash(),
+  '/loginAs': (BuildContext context) => LoginAs(),
+  '/registerAs': (BuildContext context) => RegisterAs(),
+  '/login': (BuildContext context) => Login(),
+  '/registerAsPublic': (BuildContext context) => RegisterAsPublic(),
+  '/registerAsAuthority': (BuildContext context) => RegisterAsAuthority(),
+  '/registerAsAuthorityAs': (BuildContext context) => RegisterAsAuthorityAs(),
+  '/home': (BuildContext context) => Home(),
+  '/reportIncident': (BuildContext context) => AddIncident(),
+  '/myReports': (BuildContext context) => MyReports(),
+  '/authorityHome': (BuildContext context) => AuthorityHome(),
+  '/caseSolved': (BuildContext context) => CaseSolved(),
+  '/addNews': (BuildContext context) => AddNews(),
+  '/terms': (BuildContext context) => Terms(),
+  '/privacy': (BuildContext context) => Privacy(),
+  '/about': (BuildContext context) => About(),
+  '/setting': (BuildContext context) => Setting(),
+  '/language': (BuildContext context) => Language(),
+  '/upgradeToPro': (BuildContext context) => UpgradeToPro(),
+  '/profile': (BuildContext context) => Profile(),
+  '/admin': (BuildContext context) => AdminHome(),
+  '/allNews': (BuildContext context) => AllNews(),
+  '/newsView': (BuildContext context) => NewsView(),
+  '/allReports': (BuildContext context) => AllReports(),
+  '/code': (BuildContext context) => Code(),
+  '/alert': (BuildContext context) => Alert(),
+};

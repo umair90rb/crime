@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:community_support/services/db_services.dart';
 import 'package:community_support/ui/screens/chat/add_chat_room.dart';
+import 'package:community_support/ui/screens/chat/chat.dart';
 import 'package:community_support/ui/shared/bar.dart';
 import 'package:community_support/ui/shared/drawer.dart';
 import 'package:flutter/material.dart';
@@ -31,7 +32,7 @@ class _ChatListState extends State<ChatList> {
     Navigator.push(
       context,
       MaterialPageRoute(builder: (BuildContext context) {
-        return ChatRoom(uid: widget.uid, name: doc['full_name'], avatar: doc['avatar'], peerId: doc['uid'],);
+        return Chat(peerId: doc['uid'], peerAvatar: doc['avatar'], uid: widget.uid, name: doc['full_name'],);
       }),
     );
   }
@@ -65,7 +66,7 @@ class _ChatListState extends State<ChatList> {
               return Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Center(child: Text('No contact here! Tap plus button to add'))
+                  Center(child: Text('No contact here! Tap + button to add'))
                 ],
               );
             }

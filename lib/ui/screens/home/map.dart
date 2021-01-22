@@ -31,17 +31,22 @@ class _MapState extends State<Map> with AutomaticKeepAliveClientMixin {
   DbServices db = DbServices();
   
   getIncidents() async {
+    print('getting incidents');
     List<QueryDocumentSnapshot> crimes = await db.getSnapshot('crimes');
-    crimes.map((e){
+    List<Marker> marks = List();
+    crimes.forEach((e) {
       Marker m = Marker(
-          markerId: MarkerId(e['uid']),
-          position: LatLng(e['incidentLat'], e['incidentLong']),
-          infoWindow: InfoWindow(
-              title: e['incidentType'],
-              snippet: "${e['incidentTime']} ${e['incidentDate']}"
-          ),
+        markerId: MarkerId(e['uid']),
+        position: LatLng(e['incidentLat'], e['incidentLong']),
+        infoWindow: InfoWindow(
+            title: e['incidentType'],
+            snippet: "${e['incidentTime']} ${e['incidentDate']}"
+        ),
       );
-      markers.add(m);
+      marks.add(m);
+    });
+    setState(() {
+      markers.addAll(marks);
     });
   }
 
@@ -111,6 +116,7 @@ class _MapState extends State<Map> with AutomaticKeepAliveClientMixin {
 
     getIncidents();
 
+
     if (mounted) {
       setState(() {
         userLocation = locationData;
@@ -118,8 +124,12 @@ class _MapState extends State<Map> with AutomaticKeepAliveClientMixin {
         markers.add(m);
       });
 
+      print('markers ${markers.length}');
+
     }
   }
+
+
 
 
     @override

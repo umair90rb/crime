@@ -325,9 +325,8 @@ class _AddIncidentState extends State<AddIncident> {
                           textContent: true,
                           text: 'YOUR REPORT HAS BEEN SUBMITTED',
                           subText: 'This incident will be broadcast to all nearby crimepotters and added to central crime database',
-
                         )
-                    );
+                    ).then((value) => Navigator.pop(context));
                   }
                 }),
 

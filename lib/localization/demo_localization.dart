@@ -16,7 +16,7 @@ class DemoLocalization{
 
   Future load () async {
     String jsonStringValues =
-        await rootBundle.loadString('lib/lang/${locale.languageCode}.json');
+    await rootBundle.loadString('lib/lang/${locale.languageCode}.json');
 
     Map<String, dynamic> mappedJson = json.decode(jsonStringValues);
 
@@ -37,7 +37,7 @@ class _DemoLocalizationDelegate extends LocalizationsDelegate<DemoLocalization>{
   const _DemoLocalizationDelegate();
   @override
   bool isSupported(Locale locale) {
-    return ['en', 'ng'].contains(locale.languageCode);
+    return ['en', 'bn'].contains(locale.languageCode);
   }
 
   @override

@@ -101,6 +101,7 @@ class _GetLocationFromMapState extends State<GetLocationFromMap> {
               zoom: 6.0,
             ),
           ),
+
         ],
       ),
     );

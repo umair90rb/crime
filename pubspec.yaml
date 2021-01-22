@@ -55,6 +55,8 @@ dependencies:
   permission_handler: ^5.0.1+1
   record_mp3: ^2.1.0
   path_provider: ^1.6.21
+  photo_view: ^0.10.2 #0.5.0
+  cached_network_image: ^2.3.1 #2.0.0-rc.1
 
 
 dev_dependencies:
@@ -82,8 +84,9 @@ flutter:
    - assets/logo/
    - assets/png/
    - assets/icon/
+   - assets/images/
    - lib/lang/en.json
-   - lib/lang/ng.json
+   - lib/lang/bn.json
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.

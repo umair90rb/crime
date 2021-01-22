@@ -52,9 +52,15 @@ class _SendMessageBarState extends State<SendMessageBar> {
             width: 5.0,
           ),
           GestureDetector(
-            onTap: _handleSubmittedLocal,
+            onPanStart: (detail) => print('pan start $detail'),
+            onPanEnd: (detail) => print('pan end $detail'),
+
+            // onTap: _handleSubmittedLocal,
             child: CircleAvatar(
-              child: Icon(_showMic ? Icons.mic : Icons.send, size: 16,),
+              child: Icon(
+                _showMic ? Icons.mic : Icons.send,
+                size: 16,
+              ),
             ),
           ),
         ],

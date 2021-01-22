@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import './chat_room_app_bar.dart';
 import './chat_thread.dart';
@@ -17,6 +18,10 @@ class ChatRoom extends StatefulWidget {
 
 class _ChatRoomState extends State<ChatRoom> with TickerProviderStateMixin {
   final List<ChatThread> _chatThreads = [];
+  List<QueryDocumentSnapshot> listMessage = new List.from([]);
+  int _limit = 20;
+  final int _limitIncrement = 20;
+  String groupChatId;
 
   ChatThread _buildChatThread(Thread thread) {
     final ct = ChatThread(
@@ -90,7 +95,7 @@ class _ChatRoomState extends State<ChatRoom> with TickerProviderStateMixin {
         child: Column(
           children: <Widget>[
             Expanded(
-              child: _buildMessageDisplay(),
+              child: _buildMessageDisplay()
             ),
             SendMessageBar(_handleSubmitted),
           ],

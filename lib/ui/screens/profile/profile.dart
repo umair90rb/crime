@@ -1,24 +1,16 @@
 import 'package:community_support/services/db_services.dart';
 import 'package:community_support/ui/widget/button.dart';
 import 'package:flutter/material.dart';
-import '../../widget/input_button.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 
 import 'dart:io';
 import 'dart:ui';
 
-import 'package:community_support/arguments/register_arguments.dart';
-import 'package:community_support/ui/screens/auth/register_as_public_otp.dart';
-import 'package:community_support/ui/widget/button.dart';
-// import 'package:file_picker/file_picker.dart';
 import 'package:community_support/ui/widget/dropdown.dart';
 import 'package:community_support/ui/widget/input.dart';
-import 'package:community_support/ui/widget/input_button.dart';
-import 'package:community_support/ui/widget/link.dart';
 import 'package:community_support/ui/widget/radio.dart';
 import 'package:community_support/ui/widget/date_button.dart';
-import 'package:community_support/ui/widget/res_card.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';

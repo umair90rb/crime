@@ -55,7 +55,7 @@ class _RegisterAsAuthorityState extends State<RegisterAsAuthority> {
     final pickedFile = await picker.getImage(source:ImageSource.gallery);
     if(pickedFile == null){
       scaffoldKey.currentState.showSnackBar(
-          SnackBar(content: Text('No file choosen!'))
+          SnackBar(content: Text('No file chosen!'))
       );
       return;
     }
@@ -173,7 +173,7 @@ class _RegisterAsAuthorityState extends State<RegisterAsAuthority> {
                 ),
 
                 DatePicker(
-                  firstDate: DateTime(1975, 1),
+                  firstDate: DateTime(1875, 1),
                   selectedDate: dob,
                   themeColor: Colors.amber,
                   labelColor: Colors.white,
