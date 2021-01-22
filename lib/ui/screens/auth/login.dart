@@ -1,5 +1,6 @@
 import 'dart:ui';
 
+import 'package:community_support/localization/demo_localization.dart';
 import 'package:community_support/ui/screens/auth/otp.dart';
 import 'package:community_support/ui/widget/button.dart';
 import 'package:community_support/ui/widget/colored.dart';
@@ -48,7 +49,7 @@ class Login extends StatelessWidget {
             ),
             SizedBox(height: 80),
             Heading(
-              text:'Log In',
+              text:DemoLocalization.of(context).getTranslatedValue('log_in'),
               letterSpacing: 3,
               fontSize: 22,
             ),
@@ -60,7 +61,7 @@ class Login extends StatelessWidget {
               child: RoundedInput(
                 validation: true,
                 controller: phone,
-                label: "Phone No",
+                label: DemoLocalization.of(context).getTranslatedValue('phone_no'),
                 textInputType: TextInputType.phone,
                 backgroundColor: Colors.white54,
               ),
@@ -82,9 +83,9 @@ class Login extends StatelessWidget {
                           if(value.docs.length < 1){
                                 _scaffoldKey.currentState.showSnackBar(
                                   SnackBar(
-                                    content: Text('User not exist!'),
+                                    content: Text(DemoLocalization.of(context).getTranslatedValue('user_not_exist')),
                                     action: SnackBarAction(
-                                      label: 'Register Now',
+                                      label: DemoLocalization.of(context).getTranslatedValue('register_now'),
                                       onPressed: () => Navigator.pushNamed(context, '/registerAs'),
                                     ),
                                   )
@@ -106,8 +107,8 @@ class Login extends StatelessWidget {
 
             TextWithLink(
               fontSize: 15,
-              text: "Don't have an account?",
-              link: "Register Now",
+              text: DemoLocalization.of(context).getTranslatedValue('dont_have_an_account'),
+              link: DemoLocalization.of(context).getTranslatedValue('register_now'),
               onTap: () => Navigator.pushNamed(context, '/registerAs'),
             ),
 

@@ -41,7 +41,7 @@ class _AuthorityViewState extends State<AuthorityView>{
     nextToKin = TextEditingController(text:widget.arg.nextToKin);
     phone = TextEditingController(text:widget.arg.phone);
     village = TextEditingController(text:widget.arg.village);
-    email = TextEditingController(text: widget.arg.email);
+    // email = TextEditingController(text: widget.arg.email);
     service = TextEditingController(text: widget.arg.serviceNo);
   }
 
@@ -215,7 +215,7 @@ class _AuthorityViewState extends State<AuthorityView>{
                   'martial_status': martial.text,
                   'title': title.text,
                   'next_of_kin': nextToKin.text,
-                  'email': email.text,
+                  // 'email': email.text,
                   'village': village.text,
                   'service_no': service.text,
                   'status':'Approved',

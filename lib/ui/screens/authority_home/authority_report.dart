@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:community_support/localization/demo_localization.dart';
 import 'package:community_support/services/db_services.dart';
 import 'package:community_support/ui/widget/input.dart';
 import 'package:flutter/material.dart';
@@ -50,13 +51,13 @@ class _AuthorityReportState extends State<AuthorityReport> {
                   text: doc['incidentType'],
                   style: TextStyle(fontWeight: FontWeight.bold)),
               TextSpan(text: ' - '),
-              TextSpan(text: 'Abagana Njkoka Local Government')
+              TextSpan(text: DemoLocalization.of(context).getTranslatedValue('local_govt'))
             ],
           ),
         ),
         isThreeLine: true,
         trailing: Chip(
-          label: Text('New'),
+          label: Text(DemoLocalization.of(context).getTranslatedValue('new')),
           backgroundColor: Colors.green,
         ),
       );
@@ -142,7 +143,7 @@ class _AuthorityReportState extends State<AuthorityReport> {
                   children: [
                     RoundedInput(
                       elevation: true,
-                      label: 'Search',
+                      label: DemoLocalization.of(context).getTranslatedValue('search'),
                       preIcon: Icons.search,
                     ),
                     SizedBox(
@@ -156,7 +157,7 @@ class _AuthorityReportState extends State<AuthorityReport> {
             if (snapshot.hasError) {
               return Center(
                   child:
-                      Text("Something went wrong" + snapshot.error.toString()));
+                      Text(DemoLocalization.of(context).getTranslatedValue('something_wrong') + snapshot.error.toString()));
             }
 
             return Column(

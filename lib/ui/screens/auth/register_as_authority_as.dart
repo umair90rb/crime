@@ -1,5 +1,6 @@
 import 'dart:ui';
 
+import 'package:community_support/localization/demo_localization.dart';
 import 'package:community_support/ui/widget/button.dart';
 import 'package:community_support/ui/widget/colored.dart';
 
@@ -30,14 +31,14 @@ class RegisterAsAuthorityAs extends StatelessWidget {
               fontWeight: 8,
               fontSize: 32,
               text: [
-                {"text":"ARE YOU WORKING AS", "color":Colors.white},
+                {"text": DemoLocalization.of(context).getTranslatedValue('working_as'), "color":Colors.white},
               ],
             ),
 
             SizedBox(height: 80),
 
             RoundedButton(
-              label: "Security",
+              label:  DemoLocalization.of(context).getTranslatedValue('security'),
               onPressed: () => Navigator.pushNamed(context, '/registerAsAuthority', arguments: 'security'),
             ),
             SizedBox(height: 10),
@@ -45,13 +46,13 @@ class RegisterAsAuthorityAs extends StatelessWidget {
               fontWeight: 4,
               fontSize: 20,
               text: [
-                {"text":"OR", "color":Colors.black},
+                {"text": DemoLocalization.of(context).getTranslatedValue('or'), "color":Colors.black},
               ],
             ),
             SizedBox(height: 10),
             RoundedButton(
               width: 55,
-              label: "Police",
+              label:  DemoLocalization.of(context).getTranslatedValue('police'),
               onPressed: () => Navigator.pushNamed(context, '/registerAsAuthority', arguments: 'police'),
             ),
             SizedBox(height: 100),

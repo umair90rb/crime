@@ -1,6 +1,7 @@
 import 'dart:ui';
 import 'dart:convert';
 
+import 'package:community_support/localization/demo_localization.dart';
 import 'package:community_support/ui/widget/button.dart';
 import 'package:community_support/ui/widget/link.dart';
 
@@ -74,7 +75,7 @@ class _OtpState extends State<Otp> {
               ),
               SizedBox(height: 20),
               Heading(
-                text:'Verification',
+                text:DemoLocalization.of(context).getTranslatedValue('verification'),
                 letterSpacing: 3,
                 fontSize: 22,
               ),
@@ -83,7 +84,7 @@ class _OtpState extends State<Otp> {
                 padding: const EdgeInsets.all(10.0),
                 child: Heading(
                   align: TextAlign.center,
-                  text:'We sent you a 6 digit code to verify your phone number',
+                  text:DemoLocalization.of(context).getTranslatedValue('6_digit_code'),
                   color: Colors.amber,
                   fontSize: 14,
                 ),
@@ -95,7 +96,7 @@ class _OtpState extends State<Otp> {
               ),
 
               Heading(
-                text: 'Enter your OTP code.',
+                text: DemoLocalization.of(context).getTranslatedValue('enter_your_otp_code'),
                 fontSize: 12,
               ),
 
@@ -109,7 +110,7 @@ class _OtpState extends State<Otp> {
                     controller: pin,
                     validator: (value){
                       if(value.isEmpty){
-                        return "Pin is required!";
+                        return DemoLocalization.of(context).getTranslatedValue('pin_is_required');
                       }
                       return null;
                     },
@@ -145,7 +146,7 @@ class _OtpState extends State<Otp> {
                         print(e);
                         FocusScope.of(context).unfocus();
                         _scaffoldKey.currentState
-                            .showSnackBar(SnackBar(content: Text('Invalid OTP')));
+                            .showSnackBar(SnackBar(content: Text(DemoLocalization.of(context).getTranslatedValue('invalid_otp'))));
                       }
                     },
                   ),
@@ -177,8 +178,8 @@ class _OtpState extends State<Otp> {
               Visibility(
                   visible: resendVisible,
                   child: TextWithLink(
-                    text: "Don't receive code?",
-                    link: "Resend",
+                    text: DemoLocalization.of(context).getTranslatedValue('dont_receive_code'),
+                    link: DemoLocalization.of(context).getTranslatedValue('resend'),
                     onTap: (){
                       setState(() {
                         resendVisible = false;
@@ -193,7 +194,7 @@ class _OtpState extends State<Otp> {
               SizedBox(height: 10),
 
 
-              RoundedButton(label: 'Log In', onPressed: () async {
+              RoundedButton(label: DemoLocalization.of(context).getTranslatedValue('log_in'), onPressed: () async {
                 if(_formKey.currentState.validate()){
                   print(pin.text);
                   try {
@@ -218,7 +219,7 @@ class _OtpState extends State<Otp> {
                   } catch (e) {
                     FocusScope.of(context).unfocus();
                     _scaffoldKey.currentState
-                        .showSnackBar(SnackBar(content: Text('Invalid OTP')));
+                        .showSnackBar(SnackBar(content: Text(DemoLocalization.of(context).getTranslatedValue('invalid_otp'))));
                   }
                 }
 

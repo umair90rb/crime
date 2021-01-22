@@ -1,3 +1,4 @@
+import 'package:community_support/localization/demo_localization.dart';
 import 'package:community_support/ui/shared/bar.dart';
 import 'package:flutter/material.dart';
 import '../../../services/db_services.dart';
@@ -47,7 +48,7 @@ class _CaseSolvedState extends State<CaseSolved> {
                 text: doc['incidentType'],
                 style: TextStyle(fontWeight: FontWeight.bold)),
             TextSpan(text: ' - '),
-            TextSpan(text: 'Abagana Njkoka Local Government')
+            TextSpan(text: DemoLocalization.of(context).getTranslatedValue('local_govt'))
           ],
         ),
       ),
@@ -63,7 +64,7 @@ class _CaseSolvedState extends State<CaseSolved> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: Bar(
-        title: 'Case Solved',
+        title: DemoLocalization.of(context).getTranslatedValue('case_solved'),
         isHelpIcon: true,
         scafoldKey: _scaffoldKey,
       ),
@@ -95,7 +96,7 @@ class _CaseSolvedState extends State<CaseSolved> {
               if (snapshot.hasError) {
                 return Center(
                     child:
-                    Text("Something went wrong" + snapshot.error.toString()));
+                    Text(DemoLocalization.of(context).getTranslatedValue('something_wrong') + snapshot.error.toString()));
               }
 
               return Column(

@@ -3,6 +3,7 @@ import 'dart:io';
 import 'dart:ui';
 
 import 'package:community_support/arguments/register_arguments.dart';
+import 'package:community_support/localization/demo_localization.dart';
 import 'package:community_support/ui/screens/auth/register_as_public_otp.dart';
 import 'package:community_support/ui/widget/button.dart';
 // import 'package:file_picker/file_picker.dart';
@@ -50,7 +51,7 @@ class _RegisterAsPublicState extends State<RegisterAsPublic> {
     final pickedFile = await picker.getImage(source:ImageSource.gallery);
     if(pickedFile == null){
       scaffoldKey.currentState.showSnackBar(
-          SnackBar(content: Text('No file chosen!'))
+          SnackBar(content: Text( DemoLocalization.of(context).getTranslatedValue('no_file_chosen')))
       );
       return;
     }
@@ -64,7 +65,7 @@ class _RegisterAsPublicState extends State<RegisterAsPublic> {
         compressFormat: ImageCompressFormat.jpg,
         androidUiSettings: AndroidUiSettings(
           toolbarColor: Colors.blue,
-          toolbarTitle: "Crop Image",
+          toolbarTitle:  DemoLocalization.of(context).getTranslatedValue('crop_image'),
           statusBarColor: Colors.black,
           backgroundColor: Colors.white,
         )
@@ -104,7 +105,7 @@ class _RegisterAsPublicState extends State<RegisterAsPublic> {
                   ],
                 ),
                 Heading(
-                  text:'Let\'s Get Started!',
+                  text: DemoLocalization.of(context).getTranslatedValue('lets_get_started'),
                   letterSpacing: 3,
                   fontSize: 22,
                 ),
@@ -112,7 +113,7 @@ class _RegisterAsPublicState extends State<RegisterAsPublic> {
                 RoundedInput(
                   validation: true,
                   controller: fullName,
-                  label: "Full Name",
+                  label:  DemoLocalization.of(context).getTranslatedValue('full_name'),
                   textInputType: TextInputType.name,
                   backgroundColor: Colors.black45,
                   labelColor: Colors.white,
@@ -122,7 +123,7 @@ class _RegisterAsPublicState extends State<RegisterAsPublic> {
                 RoundedInput(
                   validation: true,
                   controller: familyName,
-                  label: "Family Name",
+                  label:  DemoLocalization.of(context).getTranslatedValue('family_name'),
                   textInputType: TextInputType.name,
                   backgroundColor: Colors.black45,
                   labelColor: Colors.white,
@@ -133,7 +134,7 @@ class _RegisterAsPublicState extends State<RegisterAsPublic> {
                   selectedDate: dob,
                   themeColor: Colors.amber,
                   labelColor: Colors.white,
-                  label: dob == null ? "Date of Birth" : "${dob.day}/${dob.month}/${dob.year}",
+                  label: dob == null ?  DemoLocalization.of(context).getTranslatedValue('dob') : "${dob.day}/${dob.month}/${dob.year}",
                   backgroundColor: Colors.black45,
                   onDateSelect: (value){
                     print(value);
@@ -156,11 +157,11 @@ class _RegisterAsPublicState extends State<RegisterAsPublic> {
                   activeColor: Colors.white,
                   radios: [
                     {
-                      'label':'Married',
+                      'label': DemoLocalization.of(context).getTranslatedValue('married'),
                       'value':'married'
                     },
                     {
-                      'label':'Unmarried',
+                      'label': DemoLocalization.of(context).getTranslatedValue('unmarried'),
                       'value':'unmarried'
                     }
                   ],
@@ -172,9 +173,22 @@ class _RegisterAsPublicState extends State<RegisterAsPublic> {
                   textColor: Colors.white,
                   dropdownValue: title,
                   dropdownItems: [
-                    'Mr.', 'Mrs.', 'Miss', 'Prof.', 'Ozo', 'Lord', 'Lady', 'Sir', 'Fr.', 'Sr.', 'Elder','Dr', 'Engr.', 'Chief'
+                    DemoLocalization.of(context).getTranslatedValue('mr'),
+                    DemoLocalization.of(context).getTranslatedValue('mrs'),
+                    DemoLocalization.of(context).getTranslatedValue('miss'),
+                    DemoLocalization.of(context).getTranslatedValue('prof'),
+                    DemoLocalization.of(context).getTranslatedValue('ozo'),
+                    DemoLocalization.of(context).getTranslatedValue('lord'),
+                    DemoLocalization.of(context).getTranslatedValue('lady'),
+                    DemoLocalization.of(context).getTranslatedValue('sir'),
+                    DemoLocalization.of(context).getTranslatedValue('fr'),
+                    DemoLocalization.of(context).getTranslatedValue('sr'),
+                    DemoLocalization.of(context).getTranslatedValue('elder'),
+                    DemoLocalization.of(context).getTranslatedValue('dr'),
+                    DemoLocalization.of(context).getTranslatedValue('engr'),
+                    DemoLocalization.of(context).getTranslatedValue('chief')
                   ],
-                  hint: 'Title',
+                  hint: DemoLocalization.of(context).getTranslatedValue('title'),
                   onChanged: (value){
                     setState(() {
                       title = value;
@@ -185,7 +199,7 @@ class _RegisterAsPublicState extends State<RegisterAsPublic> {
                 RoundedInput(
                   validation: true,
                   controller: nextOfKin,
-                  label: "Next of Kin",
+                  label: DemoLocalization.of(context).getTranslatedValue('next_of_kin'),
                   textInputType: TextInputType.text,
                   backgroundColor: Colors.black45,
                   labelColor: Colors.white,
@@ -194,20 +208,20 @@ class _RegisterAsPublicState extends State<RegisterAsPublic> {
                 RoundedInput(
                   validation: true,
                   controller: phone,
-                  label: "Phone Number",
+                  label: DemoLocalization.of(context).getTranslatedValue('phone_number'),
                   textInputType: TextInputType.phone,
                   backgroundColor: Colors.black45,
                   labelColor: Colors.white,
                 ),
 
-                RoundedInput(
-                  validation: true,
-                  controller: email,
-                  label: "Email Address",
-                  textInputType: TextInputType.emailAddress,
-                  backgroundColor: Colors.black45,
-                  labelColor: Colors.white,
-                ),
+                // RoundedInput(
+                //   validation: true,
+                //   controller: email,
+                //   label: DemoLocalization.of(context).getTranslatedValue('email_address'),
+                //   textInputType: TextInputType.emailAddress,
+                //   backgroundColor: Colors.black45,
+                //   labelColor: Colors.white,
+                // ),
 
                 RoundedDropdown(
                   backgroundColor: Colors.black45,
@@ -217,7 +231,7 @@ class _RegisterAsPublicState extends State<RegisterAsPublic> {
                   dropdownItems: [
                     'Adagbe', 'Akpu', 'Amaenye', 'Orofia', 'Uru', 'Uruokpala', 'Umudunu'
                   ],
-                  hint: 'Village',
+                  hint: DemoLocalization.of(context).getTranslatedValue('village'),
                   onChanged: (value){
                     setState(() {
                       village = value;
@@ -239,12 +253,17 @@ class _RegisterAsPublicState extends State<RegisterAsPublic> {
                             Navigator.pop(context);
                           },
                           title: 'Select',
-                          content: ['Voters Card', 'Driver\s Licence', 'International Passport', 'Student ID', 'National ID Card'],
+                          content: [
+                            DemoLocalization.of(context).getTranslatedValue('voters_card'),
+                            DemoLocalization.of(context).getTranslatedValue('drivers_licence'),
+                            DemoLocalization.of(context).getTranslatedValue('international_passport'),
+                            DemoLocalization.of(context).getTranslatedValue('nation_id_card')
+                          ],
                         )
                     );
                   },
                   backgroundColor: Colors.black45,
-                  label: "ID",
+                  label: DemoLocalization.of(context).getTranslatedValue('id'),
                   labelColor: Colors.white,
                 ),
 
@@ -256,7 +275,7 @@ class _RegisterAsPublicState extends State<RegisterAsPublic> {
                     },
                     icon: Icon(Icons.camera),
                     label: Text(
-                        'Upload Your $showId',
+                      DemoLocalization.of(context).getTranslatedValue('upload_your')+'$showId',
                       style: TextStyle(
                           color: Colors.white,
                           decoration: TextDecoration.underline
@@ -272,7 +291,7 @@ class _RegisterAsPublicState extends State<RegisterAsPublic> {
                     },
                     icon: Icon(Icons.camera),
                     label: Text(
-                      'Upload Your Image',
+                      DemoLocalization.of(context).getTranslatedValue('upload_your')+"Image",
                       style: TextStyle(
                         color: Colors.white,
                         decoration: TextDecoration.underline
@@ -285,7 +304,7 @@ class _RegisterAsPublicState extends State<RegisterAsPublic> {
                 ),
 
                 RoundedButton(
-                    label: 'Create',
+                    label: DemoLocalization.of(context).getTranslatedValue('create'),
                     onPressed: (){
                       if(_formKey.currentState.validate()
                           && title != null
@@ -304,7 +323,7 @@ class _RegisterAsPublicState extends State<RegisterAsPublic> {
                                   title: title,
                                   nextToKin: nextOfKin.text,
                                   phone: phone.text,
-                                  email: email.text,
+                                  // email: email.text,
                                   village: village,
                                   id: id,
                                   photo: photo,
@@ -316,7 +335,7 @@ class _RegisterAsPublicState extends State<RegisterAsPublic> {
                       }
                       _scaffoldKey.currentState.showSnackBar(
                         SnackBar(
-                          content: Text('Please fill all fields and add images also!'),
+                          content: Text(DemoLocalization.of(context).getTranslatedValue('fill_all_field')),
 
                         )
                       );
@@ -327,8 +346,8 @@ class _RegisterAsPublicState extends State<RegisterAsPublic> {
 
                 TextWithLink(
                   fontSize: 15,
-                  text: "Already have an account?",
-                  link: "Login Here",
+                  text: DemoLocalization.of(context).getTranslatedValue('already_have_an_account'),
+                  link: DemoLocalization.of(context).getTranslatedValue('login_here'),
                   onTap: () => Navigator.pushNamed(context, '/loginAs'),
                 ),
 

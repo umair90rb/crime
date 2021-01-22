@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:community_support/localization/demo_localization.dart';
 import 'package:community_support/services/db_services.dart';
 import 'package:community_support/ui/screens/chat/add_chat_room.dart';
 import 'package:community_support/ui/screens/chat/chat.dart';
@@ -53,7 +54,7 @@ class _ChatListState extends State<ChatList> {
       ),
       drawer: AppDrawer(),
       appBar: Bar(
-        title: 'Chat',
+        title: DemoLocalization.of(context).getTranslatedValue('chat'),
         scafoldKey: _scaffoldKey,
       ),
       body: FutureBuilder(
@@ -66,7 +67,7 @@ class _ChatListState extends State<ChatList> {
               return Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Center(child: Text('No contact here! Tap + button to add'))
+                  Center(child: Text(DemoLocalization.of(context).getTranslatedValue('no_contact_found')))
                 ],
               );
             }

@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:community_support/localization/demo_localization.dart';
 import 'package:community_support/services/db_services.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -71,7 +72,7 @@ class _AuthorityNewsState extends State<AuthorityNews> {
                       mainAxisAlignment: MainAxisAlignment.spaceAround,
                       children: [
                         Text(
-                          "At ${createdAt.hour}:${createdAt.minute}",
+                          DemoLocalization.of(context).getTranslatedValue('at')+" ${createdAt.hour}:${createdAt.minute}",
                           style: TextStyle(
                               fontSize: 13,
                               color: Colors.blueAccent
@@ -165,7 +166,7 @@ class _AuthorityNewsState extends State<AuthorityNews> {
               );
             }
             if (snapshot.hasError) {
-              return Center(child: Text("Something went wrong"+snapshot.error.toString()));
+              return Center(child: Text(DemoLocalization.of(context).getTranslatedValue('something_wrong')+snapshot.error.toString()));
             }
 
 

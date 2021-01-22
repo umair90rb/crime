@@ -11,25 +11,31 @@ class AppDrawer extends StatefulWidget {
   _AppDrawerState createState() => _AppDrawerState();
 }
 
-class _AppDrawerState extends State<AppDrawer> {
+class _AppDrawerState extends State<AppDrawer> with AutomaticKeepAliveClientMixin {
+  @override
+  bool get wantKeepAlive => true;
+
   Map<String, dynamic> decodedProfile;
   Future getProfile;
   List icons;
   List drawer;
   List onTap;
-  List<bool> _selection = [true, false];
+  List<bool> _selection = [global.language == 0 ? true : false, global.language == 1 ? true : false];
 
   void _languageChanged(language, context) {
     Locale _temp;
     switch (language) {
       case 0:
         _temp = Locale('en', 'US');
+        global.language = 0;
         break;
       case 1:
         _temp = Locale('bn', 'BD');
+        global.language = 1;
         break;
       default:
         _temp = Locale('en', 'US');
+        global.language = 0;
     }
 
     MyApp.setLocale(context, _temp);
@@ -90,6 +96,7 @@ class _AppDrawerState extends State<AppDrawer> {
   Widget langButton(){
     return Builder(
       builder: (context) => ToggleButtons(
+
         children: [
           Text(
             'Eng',
@@ -101,6 +108,7 @@ class _AppDrawerState extends State<AppDrawer> {
           )
         ],
         borderRadius: BorderRadius.all(Radius.circular(10)),
+
         borderWidth: 0,
         fillColor: Colors.black,
         selectedColor: Colors.white,

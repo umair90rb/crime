@@ -1,5 +1,6 @@
 import 'dart:ui';
 
+import 'package:community_support/localization/demo_localization.dart';
 import 'package:community_support/ui/widget/button.dart';
 import 'package:community_support/ui/widget/colored.dart';
 
@@ -30,24 +31,24 @@ class RegisterAs extends StatelessWidget {
               fontWeight: 8,
               fontSize: 32,
               text: [
-                {"text":"ABAGANA", "color":Colors.amber},
-                {"text":"SECURITY", "color":Colors.black},
+                {"text":DemoLocalization.of(context).getTranslatedValue('abagana'), "color":Colors.amber},
+                {"text":DemoLocalization.of(context).getTranslatedValue('security'), "color":Colors.black},
               ],
             ),
             Heading(
               fontWeight: 7,
-              text: "COMMUNITY NEIGHBORHOOD WATCH",
+              text: DemoLocalization.of(context).getTranslatedValue('community_neighborhood_watch'),
               fontSize: 15,
             ),
             SizedBox(height: 80),
             Heading(
-              text:'REGISTER AS',
+              text: DemoLocalization.of(context).getTranslatedValue('register_as'),
               letterSpacing: 3,
               fontSize: 16,
             ),
             SizedBox(height: 10),
             RoundedButton(
-              label: "Authority",
+              label:  DemoLocalization.of(context).getTranslatedValue('authority'),
               onPressed: () => Navigator.pushNamed(context, '/registerAsAuthorityAs'),
             ),
             SizedBox(height: 10),
@@ -55,13 +56,13 @@ class RegisterAs extends StatelessWidget {
               fontWeight: 4,
               fontSize: 20,
               text: [
-                {"text":"OR", "color":Colors.amber},
+                {"text": DemoLocalization.of(context).getTranslatedValue('or'), "color":Colors.amber},
               ],
             ),
             SizedBox(height: 10),
             RoundedButton(
               width: 55,
-              label: "Public",
+              label:  DemoLocalization.of(context).getTranslatedValue('public'),
               onPressed: () => Navigator.pushNamed(context, '/registerAsPublic'),
             ),
             SizedBox(height: 100),

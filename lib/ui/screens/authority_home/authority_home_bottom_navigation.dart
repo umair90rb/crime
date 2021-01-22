@@ -1,3 +1,5 @@
+import 'package:community_support/localization/demo_localization.dart';
+
 import 'authority_news.dart';
 import 'package:community_support/ui/screens/setting/setting.dart';
 import 'package:community_support/ui/shared/bar.dart';
@@ -37,11 +39,6 @@ class _AuthorityHomeState extends State<AuthorityHome> with AutomaticKeepAliveCl
   bool get wantKeepAlive => true;
 
 
-  List<String> title = [
-    'ABAGANA SECURITY',
-    'NEWS',
-    'SETTING'
-  ];
 
   List<String> navigation = [
     'Report',
@@ -58,6 +55,14 @@ class _AuthorityHomeState extends State<AuthorityHome> with AutomaticKeepAliveCl
 
   @override
   Widget build(BuildContext context) {
+
+    List<String> title = [
+      DemoLocalization.of(context).getTranslatedValue('abagana_security'),
+      DemoLocalization.of(context).getTranslatedValue('news'),
+      DemoLocalization.of(context).getTranslatedValue('setting')
+    ];
+
+
     super.build(context);
     return Scaffold(
       key: _scaffoldKey,

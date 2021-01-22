@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:community_support/localization/demo_localization.dart';
 import 'package:community_support/services/db_services.dart';
 import 'package:community_support/ui/screens/home/get_location_from_map.dart';
 import 'package:community_support/ui/widget/button.dart';
@@ -65,17 +66,6 @@ class _AddIncidentState extends State<AddIncident> {
     'stalking',
     'robbery',
     'violence'
-  ];
-
-  List<String> crime = [
-    'Inturders',
-    'Child Abuse',
-    'Bulgery',
-    'Murder',
-    'Sexual Assault',
-    'Stalking',
-    'Robbery',
-    'Domestic Violence'
   ];
 
 
@@ -149,11 +139,22 @@ class _AddIncidentState extends State<AddIncident> {
 
   @override
   Widget build(BuildContext context) {
+    List<String> crime = [
+      DemoLocalization.of(context).getTranslatedValue('intruders'),
+      DemoLocalization.of(context).getTranslatedValue('child_abuse'),
+      DemoLocalization.of(context).getTranslatedValue('burglary'),
+      DemoLocalization.of(context).getTranslatedValue('murder'),
+      DemoLocalization.of(context).getTranslatedValue('sexual_assault'),
+      DemoLocalization.of(context).getTranslatedValue('stalking'),
+      DemoLocalization.of(context).getTranslatedValue('robbery'),
+      DemoLocalization.of(context).getTranslatedValue('domestic_violence')
+    ];
+
     Size size = MediaQuery.of(context).size;
     return Scaffold(
       key: _scaffoldKey,
       appBar:AppBar(
-        title: Text('REPORT INCIDENT'),
+        title: Text(DemoLocalization.of(context).getTranslatedValue('report_incident')),
         toolbarHeight: 100,
         centerTitle: true,
         backgroundColor: Colors.amber,
@@ -195,7 +196,7 @@ class _AddIncidentState extends State<AddIncident> {
             InputButton(
               backgroundColor: Colors.white,
               elevation: true,
-              label: add == null ? 'Location': '$add',
+              label: add == null ? DemoLocalization.of(context).getTranslatedValue('location'): '$add',
               preIcon: Icons.location_pin,
               onTap: () => _navigateAndDisplaySelection(context),
             ),
@@ -210,7 +211,7 @@ class _AddIncidentState extends State<AddIncident> {
                     themeColor: Colors.amber,
                     labelColor: Colors.black,
                     elevation: true,
-                    label: dateTime == null ? "Date of Birth" : "${dateTime.day}/${dateTime.month}/${dateTime.year}",
+                    label: dateTime == null ? DemoLocalization.of(context).getTranslatedValue('dob') : "${dateTime.day}/${dateTime.month}/${dateTime.year}",
                     backgroundColor: Colors.white,
                     onDateSelect: (value){
                       print(value);
@@ -230,7 +231,7 @@ class _AddIncidentState extends State<AddIncident> {
                     themeColor: Colors.amber,
                     labelColor: Colors.black,
                     elevation: true,
-                    label: time == null ? "Time" : "${time.hour}:${time.minute}",
+                    label: time == null ? DemoLocalization.of(context).getTranslatedValue('time') : "${time.hour}:${time.minute}",
                     backgroundColor: Colors.white,
                     onTimeSelect: (value){
                       print(value);
@@ -248,7 +249,7 @@ class _AddIncidentState extends State<AddIncident> {
               backgroundColor: Colors.white,
               maxLines: 3,
               controller: incidentDetails,
-              label: 'Add Detail',
+              label: DemoLocalization.of(context).getTranslatedValue('add_detail'),
               elevation: true,
             ),
             FlatButton.icon(
@@ -260,20 +261,20 @@ class _AddIncidentState extends State<AddIncident> {
                   print(photo.path);
                 },
                 icon: Icon(Icons.camera),
-                label: Text('Upload Photo/Video',
+                label: Text(DemoLocalization.of(context).getTranslatedValue('upload_photo_video'),
                     style: TextStyle(decoration: TextDecoration.underline),),),
             FlatButton.icon(
                 onPressed: () async {
                     isRecording ? stopRecord() : startRecord();
                 },
                 icon: Icon(Icons.mic),
-                label: Text(recordLabel+statusText+(!isComplete ? '' : '(Exporting)'),
+                label: Text(recordLabel+statusText+(!isComplete ? '' : DemoLocalization.of(context).getTranslatedValue('exporting')),
                     style: TextStyle(decoration: TextDecoration.underline),),),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 10),
               child: Heading(
                 fontSize: 14,
-                text: 'T&Cs: By Posting This Reports You Indicate Acceptance Of Our Terms and Condition',
+                text: DemoLocalization.of(context).getTranslatedValue('term_accept'),
                 color: Colors.grey,
                 align: TextAlign.justify,
               ),
@@ -281,9 +282,9 @@ class _AddIncidentState extends State<AddIncident> {
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                RoundedButton(label: 'Cancel', onPressed: () => Navigator.pop(context)),
+                RoundedButton(label: DemoLocalization.of(context).getTranslatedValue('cancel'), onPressed: () => Navigator.pop(context)),
                 SizedBox(width: 5,),
-                RoundedButton(label: 'Submit', onPressed: () async {
+                RoundedButton(label: DemoLocalization.of(context).getTranslatedValue('submit'), onPressed: () async {
                   setState(() {
                     loading = true;
                   });
@@ -323,8 +324,8 @@ class _AddIncidentState extends State<AddIncident> {
                         builder: (context) => ResCard(
                           iconTitle: true,
                           textContent: true,
-                          text: 'YOUR REPORT HAS BEEN SUBMITTED',
-                          subText: 'This incident will be broadcast to all nearby crimepotters and added to central crime database',
+                          text: DemoLocalization.of(context).getTranslatedValue('your_report_submitted'),
+                          subText: DemoLocalization.of(context).getTranslatedValue('incident_broadcast'),
                         )
                     ).then((value) => Navigator.pop(context));
                   }
@@ -354,7 +355,7 @@ class _AddIncidentState extends State<AddIncident> {
     if (hasPermission) {
       isRecording = true;
       recordLabel = '';
-      statusText = "Recording(tap to stop)";
+      statusText = DemoLocalization.of(context).getTranslatedValue('recording_tap_to_stop');
       recordFilePath = await getFilePath();
       isComplete = false;
       RecordMp3.instance.start(recordFilePath, (type) {
@@ -362,7 +363,7 @@ class _AddIncidentState extends State<AddIncident> {
         setState(() {});
       });
     } else {
-      statusText = "No microphone permission";
+      statusText = DemoLocalization.of(context).getTranslatedValue('no_microphone_permission');
     }
     setState(() {});
   }

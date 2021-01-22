@@ -4,6 +4,7 @@ import 'dart:ui';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:community_support/arguments/register_authority_argument.dart';
+import 'package:community_support/localization/demo_localization.dart';
 import 'package:community_support/services/db_services.dart';
 import 'package:community_support/ui/screens/auth/register_as_authority_otp.dart';
 import 'package:community_support/ui/screens/auth/register_as_public_otp.dart';
@@ -69,7 +70,7 @@ class _RegisterAsAuthorityState extends State<RegisterAsAuthority> {
         compressFormat: ImageCompressFormat.jpg,
         androidUiSettings: AndroidUiSettings(
           toolbarColor: Colors.blue,
-          toolbarTitle: "Crop Image",
+          toolbarTitle:  DemoLocalization.of(context).getTranslatedValue('crop_image'),
           statusBarColor: Colors.black,
           backgroundColor: Colors.white,
         )
@@ -139,7 +140,7 @@ class _RegisterAsAuthorityState extends State<RegisterAsAuthority> {
                   ],
                 ),
                 Heading(
-                  text:'Let\'s Get Started!',
+                  text: DemoLocalization.of(context).getTranslatedValue('lets_get_started'),
                   letterSpacing: 3,
                   fontSize: 22,
                 ),
@@ -156,7 +157,7 @@ class _RegisterAsAuthorityState extends State<RegisterAsAuthority> {
                 RoundedInput(
                   validation: true,
                   controller: fullName,
-                  label: "Full Name",
+                  label:  DemoLocalization.of(context).getTranslatedValue('full_name'),
                   textInputType: TextInputType.name,
                   backgroundColor: Colors.amber.withOpacity(0.75),
                   labelColor: Colors.white,
@@ -166,7 +167,7 @@ class _RegisterAsAuthorityState extends State<RegisterAsAuthority> {
                 RoundedInput(
                   validation: true,
                   controller: familyName,
-                  label: "Family Name",
+                  label:  DemoLocalization.of(context).getTranslatedValue('family_name'),
                   textInputType: TextInputType.name,
                   backgroundColor:  Colors.amber.withOpacity(0.75),
                   labelColor: Colors.white,
@@ -177,7 +178,7 @@ class _RegisterAsAuthorityState extends State<RegisterAsAuthority> {
                   selectedDate: dob,
                   themeColor: Colors.amber,
                   labelColor: Colors.white,
-                  label: dob == null ? "Date of Birth" : "${dob.day}/${dob.month}/${dob.year}",
+                  label: dob == null ?  DemoLocalization.of(context).getTranslatedValue('dob') : "${dob.day}/${dob.month}/${dob.year}",
                   backgroundColor:  Colors.amber.withOpacity(0.75),
                   onDateSelect: (value){
                     print(value);
@@ -200,11 +201,11 @@ class _RegisterAsAuthorityState extends State<RegisterAsAuthority> {
                   activeColor: Colors.amber,
                   radios: [
                     {
-                      'label':'Married',
+                      'label': DemoLocalization.of(context).getTranslatedValue('married'),
                       'value':'married'
                     },
                     {
-                      'label':'Unmarried',
+                      'label': DemoLocalization.of(context).getTranslatedValue('unmarried'),
                       'value':'unmarried'
                     }
                   ],
@@ -216,9 +217,22 @@ class _RegisterAsAuthorityState extends State<RegisterAsAuthority> {
                   textColor: Colors.white,
                   dropdownValue: title,
                   dropdownItems: [
-                    'Mr.', 'Mrs.', 'Miss', 'Prof.', 'Ozo', 'Lord', 'Lady', 'Sir', 'Fr.', 'Sr.', 'Elder','Dr', 'Engr.', 'Chief'
+                    DemoLocalization.of(context).getTranslatedValue('mr'),
+                    DemoLocalization.of(context).getTranslatedValue('mrs'),
+                    DemoLocalization.of(context).getTranslatedValue('miss'),
+                    DemoLocalization.of(context).getTranslatedValue('prof'),
+                    DemoLocalization.of(context).getTranslatedValue('ozo'),
+                    DemoLocalization.of(context).getTranslatedValue('lord'),
+                    DemoLocalization.of(context).getTranslatedValue('lady'),
+                    DemoLocalization.of(context).getTranslatedValue('sir'),
+                    DemoLocalization.of(context).getTranslatedValue('fr'),
+                    DemoLocalization.of(context).getTranslatedValue('sr'),
+                    DemoLocalization.of(context).getTranslatedValue('elder'),
+                    DemoLocalization.of(context).getTranslatedValue('dr'),
+                    DemoLocalization.of(context).getTranslatedValue('engr'),
+                    DemoLocalization.of(context).getTranslatedValue('chief')
                   ],
-                  hint: 'Title',
+                  hint:  DemoLocalization.of(context).getTranslatedValue('title'),
                   onChanged: (value){
                     setState(() {
                       title = value;
@@ -229,7 +243,7 @@ class _RegisterAsAuthorityState extends State<RegisterAsAuthority> {
                 RoundedInput(
                   validation: true,
                   controller: nextOfKin,
-                  label: "Next of Kin",
+                  label:  DemoLocalization.of(context).getTranslatedValue('next_of_kin'),
                   textInputType: TextInputType.text,
                   backgroundColor: Colors.amber.withOpacity(0.75),
                   labelColor: Colors.white,
@@ -239,20 +253,20 @@ class _RegisterAsAuthorityState extends State<RegisterAsAuthority> {
                 RoundedInput(
                   validation: true,
                   controller: phone,
-                  label: "Phone Number",
+                  label:  DemoLocalization.of(context).getTranslatedValue('phone_number'),
                   textInputType: TextInputType.phone,
                   backgroundColor: Colors.amber.withOpacity(0.75),
                   labelColor: Colors.white,
                 ),
 
-                RoundedInput(
-                  validation: true,
-                  controller: email,
-                  label: "Email Address",
-                  textInputType: TextInputType.emailAddress,
-                  backgroundColor: Colors.amber.withOpacity(0.75),
-                  labelColor: Colors.white,
-                ),
+                // RoundedInput(
+                //   validation: true,
+                //   controller: email,
+                //   label:  DemoLocalization.of(context).getTranslatedValue('email_address'),
+                //   textInputType: TextInputType.emailAddress,
+                //   backgroundColor: Colors.amber.withOpacity(0.75),
+                //   labelColor: Colors.white,
+                // ),
 
                 RoundedDropdown(
                   backgroundColor: Colors.amber.withOpacity(0.75),
@@ -262,7 +276,7 @@ class _RegisterAsAuthorityState extends State<RegisterAsAuthority> {
                   dropdownItems: [
                     'Adagbe', 'Akpu', 'Amaenye', 'Orofia', 'Uru', 'Uruokpala', 'Umudunu'
                   ],
-                  hint: 'Village',
+                  hint:  DemoLocalization.of(context).getTranslatedValue('village'),
                   onChanged: (value){
                     setState(() {
                       village = value;
@@ -288,7 +302,7 @@ class _RegisterAsAuthorityState extends State<RegisterAsAuthority> {
                     RoundedInput(
                       validation: true,
                       controller: serviceNo,
-                      label: "Service No",
+                      label:  DemoLocalization.of(context).getTranslatedValue('service_no'),
                       textInputType: TextInputType.number,
                       backgroundColor: Colors.amber.withOpacity(0.75),
                       labelColor: Colors.white,
@@ -308,13 +322,18 @@ class _RegisterAsAuthorityState extends State<RegisterAsAuthority> {
                             });
                             Navigator.pop(context);
                           },
-                          title: 'Select',
-                          content: ['Voters Card', 'Driver\s Licence', 'International Passport', 'National ID Card'],
+                          title:  DemoLocalization.of(context).getTranslatedValue('select'),
+                          content: [
+                            DemoLocalization.of(context).getTranslatedValue('voters_card'),
+                            DemoLocalization.of(context).getTranslatedValue('drivers_licence'),
+                            DemoLocalization.of(context).getTranslatedValue('international_passport'),
+                            DemoLocalization.of(context).getTranslatedValue('nation_id_card')
+                          ],
                         )
                     );
                   },
                   backgroundColor: Colors.amber.withOpacity(0.75),
-                  label: "ID",
+                  label:  DemoLocalization.of(context).getTranslatedValue('id'),
                   labelColor: Colors.white,
                 ),
 
@@ -326,7 +345,7 @@ class _RegisterAsAuthorityState extends State<RegisterAsAuthority> {
                     },
                     icon: Icon(Icons.camera),
                     label: Text(
-                      'Upload Your $showId',
+                      DemoLocalization.of(context).getTranslatedValue('upload_your')+'$showId',
                       style: TextStyle(
                           color: Colors.black,
                           decoration: TextDecoration.underline
@@ -341,7 +360,7 @@ class _RegisterAsAuthorityState extends State<RegisterAsAuthority> {
                     },
                   icon: Icon(Icons.camera),
                   label: Text(
-                      'Upload You Full Image with Uniform',
+                    DemoLocalization.of(context).getTranslatedValue('full_uniform_image'),
                     style: TextStyle(
                       decoration: TextDecoration.underline
                     ),
@@ -349,7 +368,7 @@ class _RegisterAsAuthorityState extends State<RegisterAsAuthority> {
                 ),
 
                 RoundedButton(
-                  label: 'Create',
+                  label:  DemoLocalization.of(context).getTranslatedValue('create'),
                   onPressed: () async {
                     if(_formKey.currentState.validate()
                         && title != null
@@ -371,7 +390,7 @@ class _RegisterAsAuthorityState extends State<RegisterAsAuthority> {
                                   title: title,
                                   nextToKin: nextOfKin.text,
                                   phone: phone.text,
-                                  email: email.text,
+                                  // email: email.text,
                                   village: village,
                                   serviceNo: serviceNo.text,
                                   id: id,
@@ -385,7 +404,7 @@ class _RegisterAsAuthorityState extends State<RegisterAsAuthority> {
                       } else {
                         _scaffoldKey.currentState.showSnackBar(
                             SnackBar(
-                              content: Text('Specified service no is invalid!'),
+                              content: Text( DemoLocalization.of(context).getTranslatedValue('service_no_invalid')),
                             )
                         );
                       }
@@ -393,7 +412,7 @@ class _RegisterAsAuthorityState extends State<RegisterAsAuthority> {
                     }
                     _scaffoldKey.currentState.showSnackBar(
                         SnackBar(
-                          content: Text('Please fill all fields and add images also!'),
+                          content: Text( DemoLocalization.of(context).getTranslatedValue('fill_all_field')),
 
                         )
                     );
@@ -404,8 +423,8 @@ class _RegisterAsAuthorityState extends State<RegisterAsAuthority> {
 
                 TextWithLink(
                   fontSize: 15,
-                  text: "Already have an account?",
-                  link: "Login Here",
+                  text:  DemoLocalization.of(context).getTranslatedValue('already_have_an_account'),
+                  link:  DemoLocalization.of(context).getTranslatedValue('login_here'),
                   onTap: () => Navigator.pushNamed(context, '/loginAs'),
                 ),
 

@@ -1,3 +1,4 @@
+import 'package:community_support/localization/demo_localization.dart';
 import 'package:community_support/services/db_services.dart';
 import 'package:community_support/ui/widget/button.dart';
 import 'package:flutter/material.dart';
@@ -36,7 +37,7 @@ class _ProfileState extends State<Profile> {
     final pickedFile = await picker.getImage(source:ImageSource.gallery);
     if(pickedFile == null){
       scaffoldKey.currentState.showSnackBar(
-          SnackBar(content: Text('No file choosen!'))
+          SnackBar(content: Text(DemoLocalization.of(context).getTranslatedValue('no_file_chosen')))
       );
       return;
     }
@@ -50,7 +51,7 @@ class _ProfileState extends State<Profile> {
         compressFormat: ImageCompressFormat.jpg,
         androidUiSettings: AndroidUiSettings(
           toolbarColor: Colors.blue,
-          toolbarTitle: "Crop Image",
+          toolbarTitle: DemoLocalization.of(context).getTranslatedValue('crop_image'),
           statusBarColor: Colors.black,
           backgroundColor: Colors.white,
         )
@@ -121,7 +122,7 @@ class _ProfileState extends State<Profile> {
               RoundedInput(
                 validation: true,
                 controller: fullName,
-                label: "Full Name",
+                label:DemoLocalization.of(context).getTranslatedValue('full_name'),
                 textInputType: TextInputType.name,
                 backgroundColor: Colors.black45,
                 labelColor: Colors.white,
@@ -131,7 +132,7 @@ class _ProfileState extends State<Profile> {
               RoundedInput(
                 validation: true,
                 controller: familyName,
-                label: "Family Name",
+                label: DemoLocalization.of(context).getTranslatedValue('family_name'),
                 textInputType: TextInputType.name,
                 backgroundColor: Colors.black45,
                 labelColor: Colors.white,
@@ -165,11 +166,11 @@ class _ProfileState extends State<Profile> {
                 activeColor: Colors.white,
                 radios: [
                   {
-                    'label':'Married',
+                    'label':DemoLocalization.of(context).getTranslatedValue('married'),
                     'value':'married'
                   },
                   {
-                    'label':'Unmarried',
+                    'label':DemoLocalization.of(context).getTranslatedValue('unmarried'),
                     'value':'unmarried'
                   }
                 ],
@@ -181,9 +182,22 @@ class _ProfileState extends State<Profile> {
                 textColor: Colors.white,
                 dropdownValue: title,
                 dropdownItems: [
-                  'Mr.', 'Mrs.', 'Miss', 'Prof.', 'Ozo', 'Lord', 'Lady', 'Sir', 'Fr.', 'Sr.', 'Elder','Dr', 'Engr.', 'Chief'
+                  DemoLocalization.of(context).getTranslatedValue('mr'),
+                  DemoLocalization.of(context).getTranslatedValue('mrs'),
+                  DemoLocalization.of(context).getTranslatedValue('miss'),
+                  DemoLocalization.of(context).getTranslatedValue('prof'),
+                  DemoLocalization.of(context).getTranslatedValue('ozo'),
+                  DemoLocalization.of(context).getTranslatedValue('lord'),
+                  DemoLocalization.of(context).getTranslatedValue('lady'),
+                  DemoLocalization.of(context).getTranslatedValue('sir'),
+                  DemoLocalization.of(context).getTranslatedValue('fr'),
+                  DemoLocalization.of(context).getTranslatedValue('sr'),
+                  DemoLocalization.of(context).getTranslatedValue('elder'),
+                  DemoLocalization.of(context).getTranslatedValue('dr'),
+                  DemoLocalization.of(context).getTranslatedValue('engr'),
+                  DemoLocalization.of(context).getTranslatedValue('chief')
                 ],
-                hint: 'Title',
+                hint: DemoLocalization.of(context).getTranslatedValue('title'),
                 onChanged: (value){
                   setState(() {
                     title = value;
@@ -194,7 +208,7 @@ class _ProfileState extends State<Profile> {
               RoundedInput(
                 validation: true,
                 controller: nextOfKin,
-                label: "Next of Kin",
+                label: DemoLocalization.of(context).getTranslatedValue('next_to_kin'),
                 textInputType: TextInputType.text,
                 backgroundColor: Colors.black45,
                 labelColor: Colors.white,
@@ -203,7 +217,7 @@ class _ProfileState extends State<Profile> {
               RoundedInput(
                 validation: true,
                 controller: phone,
-                label: "Phone Number",
+                label: DemoLocalization.of(context).getTranslatedValue('phone_number'),
                 textInputType: TextInputType.phone,
                 backgroundColor: Colors.black45,
                 labelColor: Colors.white,
@@ -212,7 +226,7 @@ class _ProfileState extends State<Profile> {
               RoundedInput(
                 validation: true,
                 controller: email,
-                label: "Email Address",
+                label: DemoLocalization.of(context).getTranslatedValue('email_address'),
                 textInputType: TextInputType.emailAddress,
                 backgroundColor: Colors.black45,
                 labelColor: Colors.white,
@@ -226,7 +240,7 @@ class _ProfileState extends State<Profile> {
                 dropdownItems: [
                   'Adagbe', 'Akpu', 'Amaenye', 'Orofia', 'Uru', 'Uruokpala', 'Umudunu'
                 ],
-                hint: 'Village',
+                hint: DemoLocalization.of(context).getTranslatedValue('village'),
                 onChanged: (value){
                   setState(() {
                     village = value;
@@ -294,7 +308,7 @@ class _ProfileState extends State<Profile> {
               ),
 
               RoundedButton(
-                label: 'Update',
+                label: DemoLocalization.of(context).getTranslatedValue('update'),
                 onPressed: () async {
                   print("title $title, village $village");
                   if(_formKey.currentState.validate()){
@@ -317,14 +331,14 @@ class _ProfileState extends State<Profile> {
                       });
                       return _scaffoldKey.currentState.showSnackBar(
                           SnackBar(
-                            content: Text('Profile updated.'),
+                            content: Text(DemoLocalization.of(context).getTranslatedValue('profile_updated')),
 
                           )
                       );
                     }
                     _scaffoldKey.currentState.showSnackBar(
                         SnackBar(
-                          content: Text('Please fill all fields and add images also!'),
+                          content: Text(DemoLocalization.of(context).getTranslatedValue('fill_all_field')),
 
                         )
                     );

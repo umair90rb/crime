@@ -3,6 +3,7 @@ import 'dart:io';
 
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:community_support/localization/demo_localization.dart';
 import 'package:community_support/ui/screens/chat/chat_room_app_bar.dart';
 import 'package:community_support/ui/widget/full_photo.dart';
 import 'package:firebase_storage/firebase_storage.dart';
@@ -170,7 +171,7 @@ class ChatScreenState extends State<ChatScreen> {
         isLoading = false;
       });
       Fluttertoast.showToast(
-          msg: 'Something goes wrong! $e}',
+          msg: DemoLocalization.of(context).getTranslatedValue('something_wrong')+'$e',
           backgroundColor: Colors.black,
           textColor: Colors.red);
       }
@@ -204,7 +205,7 @@ class ChatScreenState extends State<ChatScreen> {
           duration: Duration(milliseconds: 300), curve: Curves.easeOut);
     } else {
       Fluttertoast.showToast(
-          msg: 'Nothing to send',
+          msg: DemoLocalization.of(context).getTranslatedValue('nothing_to_send'),
           backgroundColor: Colors.black,
           textColor: Colors.red);
     }
@@ -649,7 +650,7 @@ class ChatScreenState extends State<ChatScreen> {
                 style: TextStyle(color: primaryColor, fontSize: 15.0),
                 controller: textEditingController,
                 decoration: InputDecoration.collapsed(
-                  hintText: 'Type your message...',
+                  hintText: DemoLocalization.of(context).getTranslatedValue('type_your_message'),
                   hintStyle: TextStyle(color: greyColor),
                 ),
                 focusNode: focusNode,

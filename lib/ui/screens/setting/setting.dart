@@ -1,3 +1,4 @@
+import 'package:community_support/localization/demo_localization.dart';
 import 'package:community_support/ui/widget/full_row.dart';
 import 'package:community_support/ui/widget/heading.dart';
 import 'package:flutter/material.dart';
@@ -13,24 +14,27 @@ class Setting extends StatefulWidget {
 
 class _SettingState extends State<Setting> {
 
-  final Uri _sendEmail = Uri(
-      scheme: 'mailto',
-      path: 'saftyapps@gmail.com',
-      queryParameters: {
-        'subject': 'Abgana Security app user review'
-      }
-  );
-
-  final Uri _writeUs = Uri(
-    scheme: 'mailto',
-    path: 'saftyapps@gmail.com',
-    queryParameters: {
-      'subject': 'Write Us your opinion and reviews'
-    }
-  );
 
   @override
   Widget build(BuildContext context) {
+
+    final Uri _sendEmail = Uri(
+        scheme: 'mailto',
+        path: 'saftyapps@gmail.com',
+        queryParameters: {
+          'subject': DemoLocalization.of(context).getTranslatedValue('user_review_subject')
+        }
+    );
+
+    final Uri _writeUs = Uri(
+        scheme: 'mailto',
+        path: 'saftyapps@gmail.com',
+        queryParameters: {
+          'subject': DemoLocalization.of(context).getTranslatedValue('write_us_subject')
+        }
+    );
+
+
     return SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -38,12 +42,12 @@ class _SettingState extends State<Setting> {
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 15),
               child: Heading(
-                text: 'Purchase',
+                text: DemoLocalization.of(context).getTranslatedValue('purchase'),
                 fontSize: 16,
               ),
             ),
             FullWidget(
-              text: 'Buy Pro Version',
+              text: DemoLocalization.of(context).getTranslatedValue('buy_pro_version'),
               icon: Icons.lock,
               onTap: () => Navigator.pushNamed(context, '/upgradeToPro'),
             ),
@@ -51,31 +55,31 @@ class _SettingState extends State<Setting> {
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 15),
               child: Heading(
-                text: 'Contact Us',
+                text: DemoLocalization.of(context).getTranslatedValue('contact_us'),
                 fontSize: 16,
               ),
             ),
             FullWidget(
-              text: 'Send Email',
+              text: DemoLocalization.of(context).getTranslatedValue('send_email'),
               icon: Icons.chat,
               onTap: () => launch(_sendEmail.toString()),
             ),
 
 
             FullWidget(
-              text: 'Rate App',
+              text: DemoLocalization.of(context).getTranslatedValue('rate_app'),
               icon: Icons.thumb_up,
               onTap: () => launch('https://play.google.com/store/apps/details?id=com.abgana.security'),
             ),
 
             FullWidget(
-              text: 'Share App',
+              text: DemoLocalization.of(context).getTranslatedValue('share_app'),
               icon: Icons.share,
               onTap: () => Share.share('https://play.google.com/store/apps/details?id=com.abgana.security'),
             ),
 
             FullWidget(
-              text: 'Write Us',
+              text: DemoLocalization.of(context).getTranslatedValue('write_us'),
               icon: Icons.announcement,
               onTap: () => launch(_writeUs.toString()),
             ),
@@ -83,18 +87,18 @@ class _SettingState extends State<Setting> {
             SizedBox(height: 10,),
 
             FullWidget(
-              text: 'Terms and conditions',
+              text: DemoLocalization.of(context).getTranslatedValue('terms_and_condition'),
               icon: Icons.article_sharp,
               onTap: () => Navigator.pushNamed(context, '/terms'),
             ),
 
             FullWidget(
-              text: 'Privacy Policy',
+              text: DemoLocalization.of(context).getTranslatedValue('privacy_policy'),
               icon: Icons.lock_open,
               onTap: () => Navigator.pushNamed(context, '/privacy'),
             ),
             FullWidget(
-              text: 'Logout',
+              text: DemoLocalization.of(context).getTranslatedValue('logout'),
               icon: Icons.logout,
               onTap: () async {
                 final prefs = await SharedPreferences.getInstance();

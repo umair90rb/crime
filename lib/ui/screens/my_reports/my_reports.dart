@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:community_support/localization/demo_localization.dart';
 import 'package:community_support/services/db_services.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -47,7 +48,7 @@ class _MyReportsState extends State<MyReports> {
                     children: [
                       TextSpan(text: doc['incidentType'], style: TextStyle(fontWeight: FontWeight.bold)),
                       TextSpan(text: ' - ' ),
-                      TextSpan(text: 'Abagana Njkoka Local Government')
+                      TextSpan(text: DemoLocalization.of(context).getTranslatedValue('local_govt'))
                       // TextSpan(
                       //     text: doc['incidentLocation'],
                       // )
@@ -100,7 +101,7 @@ class _MyReportsState extends State<MyReports> {
       key: _scaffoldKey,
       appBar: AppBar(
         title: Text(
-            'My Reported Incidents',
+          DemoLocalization.of(context).getTranslatedValue('my_reported_incidents'),
           style: TextStyle(
               fontSize: 25
           ),
@@ -123,7 +124,7 @@ class _MyReportsState extends State<MyReports> {
                 List<QueryDocumentSnapshot> dataList = snapshot.data;
                 if(dataList.length < 1) {
                   return Center(
-                    child: Text('You have no incidents reported!'),
+                    child: Text(DemoLocalization.of(context).getTranslatedValue('you_have_no_incident')),
                   );
                 }
                 return Column(
@@ -134,7 +135,7 @@ class _MyReportsState extends State<MyReports> {
               }
 
               if (snapshot.hasError) {
-                return Center(child: Text("Something went wrong"+snapshot.error.toString()));
+                return Center(child: Text(DemoLocalization.of(context).getTranslatedValue('something_wrong')+snapshot.error.toString()));
               }
 
 

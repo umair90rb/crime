@@ -13,7 +13,7 @@
   "send_code": "Zipu Koodu",
   "user_not_exist": "Onye oru adighi!",
   "register_now": "Debanye aha Ugbu a",
-  "don't_have_an_account": "Enweghị akaụntụ?",
+  "dont_have_an_account": "Enweghị akaụntụ?",
 
   "abagana": "ABAGANA",
   "security": "nche",
@@ -28,17 +28,19 @@
   "enter_your_otp_code": "Tinye koodu OTP.",
   "pin_is_required": "Pin chọrọ!",
   "invalid_otp": "OTP na-ezighi ezi",
-  "don't_receive_code": "Anatala koodu?",
-  "resent": "Kpegharịa",
+  "dont_receive_code": "Anatala koodu?",
+  "resend": "Kpegharịa",
   "log_in": "banye",
 
   "register_as": "Debanye aha dika",
+
+  "new": "ọhụrụ",
 
   "no_file_chosen": "enweghị faịlụ ahọpụtara",
   "crop_image": "Ihe ubi",
   "lets_get_started": "Ka anyị bido",
   "full_name": "aha n'uju",
-  "Family_name": "Aha ezinụlọ",
+  "family_name": "Aha ezinụlọ",
   "dob": "Ụbọchị ọmụmụ",
   "married": "ọdọ",
   "unmarried": "na-alụghị di",
@@ -80,6 +82,7 @@
   "police": "Ndị uwe ojii",
 
   "abagana_security": "ABAGANA AHU",
+  "reports": "AKPKỌ",
   "news": "OZI",
   "setting": "Ntọala",
 
@@ -117,7 +120,7 @@
   "location": "Ọnọdụ",
   "time": "Oge",
   "add_detail": "Tinye Ihe",
-  "upload_photo_vedio": "Bulite foto / vidiyo",
+  "upload_photo_video": "Bulite foto / vidiyo",
   "exporting": "(Na-ebupụ)",
   "term_accept": "T & Cs: Site na Posttọ Akụkọ a You Na-egosi Nnabata Usoro Anyị na Ọnọdụ Anyị",
   "cancel": "Kagbuo",

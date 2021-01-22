@@ -39,7 +39,7 @@ class _UserViewState extends State<UserView>{
     nextToKin = TextEditingController(text:widget.arg.nextToKin);
     phone = TextEditingController(text:widget.arg.phone);
     village = TextEditingController(text:widget.arg.village);
-    email = TextEditingController(text: widget.arg.email);
+    // email = TextEditingController(text: widget.arg.email);
   }
 
   bool loading = false;
@@ -201,7 +201,7 @@ class _UserViewState extends State<UserView>{
                 'martial_status': martial.text,
                 'title': title.text,
                 'next_of_kin': nextToKin.text,
-                'email': email.text,
+                // 'email': email.text,
                 'village': village.text,
                 'status':'Approved',
                 }).then((value){

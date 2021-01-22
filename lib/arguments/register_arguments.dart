@@ -8,13 +8,13 @@ class RegisterArguments {
   final String title;
   final String nextToKin;
   final String phone;
-  final String email;
+  // final String email;
   final String village;
   final dynamic id;
   final dynamic photo;
   final DateTime createdAt;
   final String docId;
 
-  RegisterArguments({this.fullName, this.createdAt, this.docId, this.familyName, this.dob, this.martialStatus, this.title, this.nextToKin, this.phone, this.email, this.village, this.id, this.photo});
+  RegisterArguments({this.fullName, this.createdAt, this.docId, this.familyName, this.dob, this.martialStatus, this.title, this.nextToKin, this.phone, this.village, this.id, this.photo});
 
 }

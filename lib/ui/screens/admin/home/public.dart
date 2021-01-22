@@ -49,7 +49,7 @@ class _PublicUsersListState extends State<PublicUsersList> with AutomaticKeepAli
             title: doc['title'],
             nextToKin: doc['next_of_kin'],
             phone: doc['phone'],
-            email: doc['email'],
+            // email: doc['email'],
             village: doc['village'],
             photo: doc['avatar'],
             id: doc['id'],

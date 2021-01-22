@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:community_support/localization/demo_localization.dart';
 import 'package:community_support/services/db_services.dart';
 import 'package:community_support/ui/screens/chat/chat_list.dart';
 import 'package:community_support/ui/screens/chat/chat_list_tile.dart';
@@ -42,7 +43,7 @@ class _AddChatRoomState extends State<AddChatRoom> {
       key: _scaffoldKey,
       drawer: AppDrawer(),
       appBar: Bar(
-        title: 'Add Chat Room',
+        title: DemoLocalization.of(context).getTranslatedValue('add_chat_room'),
         scafoldKey: _scaffoldKey,
       ),
       body: Column(
@@ -51,16 +52,16 @@ class _AddChatRoomState extends State<AddChatRoom> {
           RoundedInput(
             controller: search,
             elevation: true,
-            label: 'Phone Number',
+            label: DemoLocalization.of(context).getTranslatedValue('phone_number'),
             preIcon: Icons.search,
             validation: true,
             textInputType: TextInputType.phone,
           ),
-          RoundedButton(label: 'Search', onPressed: () async {
+          RoundedButton(label: DemoLocalization.of(context).getTranslatedValue('search'), onPressed: () async {
             db.getSnapshotWithQuery('profile', 'phone', [search.text]).then((value){
               print(value);
               if(value.isEmpty){
-                Fluttertoast.showToast(msg: 'No contact Found!');
+                Fluttertoast.showToast(msg: DemoLocalization.of(context).getTranslatedValue('no_contact_found'));
                 return;
               }
               print('here');

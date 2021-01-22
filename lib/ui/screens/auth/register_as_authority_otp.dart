@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:io';
 import 'dart:convert';
 
+import 'package:community_support/localization/demo_localization.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:community_support/arguments/register_authority_argument.dart';
@@ -74,7 +75,7 @@ class _RegisterAuthorityOtpState extends State<RegisterAuthorityOtp> {
       'type': arg.type,
       'phone': arg.phone,
       'full_name': arg.fullName, // John Doe
-      'email':arg.email,
+      // 'email':arg.email,
       'service_no':arg.serviceNo,
       'avatar':avatar,
       'id':id,
@@ -96,7 +97,7 @@ class _RegisterAuthorityOtpState extends State<RegisterAuthorityOtp> {
         'type': arg.type,
         'phone': arg.phone,
         'full_name': arg.fullName,
-        'email':arg.email,
+        // 'email':arg.email,
         'service_no':arg.serviceNo,
         'avatar':avatar,
         'id':id,
@@ -143,7 +144,7 @@ class _RegisterAuthorityOtpState extends State<RegisterAuthorityOtp> {
               ),
               SizedBox(height: 20),
               Heading(
-                text:'Verification',
+                text: DemoLocalization.of(context).getTranslatedValue('verification'),
                 letterSpacing: 3,
                 fontSize: 22,
               ),
@@ -152,7 +153,7 @@ class _RegisterAuthorityOtpState extends State<RegisterAuthorityOtp> {
                 padding: const EdgeInsets.all(10.0),
                 child: Heading(
                   align: TextAlign.center,
-                  text:'We sent you a 6 digit code to verify your phone number',
+                  text: DemoLocalization.of(context).getTranslatedValue('6_digit_code'),
                   color: Colors.amber,
                   fontSize: 14,
                 ),
@@ -164,7 +165,7 @@ class _RegisterAuthorityOtpState extends State<RegisterAuthorityOtp> {
               ),
 
               Heading(
-                text: 'Enter your otp code.',
+                text:  DemoLocalization.of(context).getTranslatedValue('enter_your_otp_code'),
                 fontSize: 12,
               ),
 
@@ -175,7 +176,7 @@ class _RegisterAuthorityOtpState extends State<RegisterAuthorityOtp> {
                   child: PinPut(
                     validator: (value){
                       if(value.isEmpty){
-                        return "Pin is required!";
+                        return  DemoLocalization.of(context).getTranslatedValue('pin_is_required');
                       }
                       return null;
                     },
@@ -212,7 +213,7 @@ class _RegisterAuthorityOtpState extends State<RegisterAuthorityOtp> {
                         print(e);
                         FocusScope.of(context).unfocus();
                         _scaffoldKey.currentState
-                            .showSnackBar(SnackBar(content: Text('Invalid OTP')));
+                            .showSnackBar(SnackBar(content: Text( DemoLocalization.of(context).getTranslatedValue('invalid_otp'))));
                       }
                     },
                   ),
@@ -244,8 +245,8 @@ class _RegisterAuthorityOtpState extends State<RegisterAuthorityOtp> {
               Visibility(
                 visible: resendVisible,
                 child: TextWithLink(
-                  text: "Don't receive code?",
-                  link: "Resend",
+                  text:  DemoLocalization.of(context).getTranslatedValue('dont_receive_code'),
+                  link:  DemoLocalization.of(context).getTranslatedValue('resend'),
                   onTap: (){
                     setState(() {
                       resendVisible = false;
@@ -283,7 +284,7 @@ class _RegisterAuthorityOtpState extends State<RegisterAuthorityOtp> {
                       print(e);
                       FocusScope.of(context).unfocus();
                       _scaffoldKey.currentState
-                          .showSnackBar(SnackBar(content: Text('Invalid OTP')));
+                          .showSnackBar(SnackBar(content: Text( DemoLocalization.of(context).getTranslatedValue('invalid_otp'),),),);
                     }
                   }
                 },

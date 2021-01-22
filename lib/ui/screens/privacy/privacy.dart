@@ -1,3 +1,4 @@
+import 'package:community_support/localization/demo_localization.dart';
 import 'package:community_support/ui/widget/heading.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_html/flutter_html.dart';
@@ -21,7 +22,7 @@ class _PrivacyState extends State<Privacy> {
             ],),
             SizedBox(height: 20,),
             Heading(
-              text: 'Privacy Policy',
+              text: DemoLocalization.of(context).getTranslatedValue('privacy_policy'),
               fontSize: 20,
             ),
             Padding(

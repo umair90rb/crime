@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:community_support/localization/demo_localization.dart';
 import 'package:community_support/services/db_services.dart';
 import 'package:community_support/ui/widget/button.dart';
 import 'package:community_support/ui/widget/input.dart';
@@ -71,7 +72,7 @@ class _NewsState extends State<News> with SingleTickerProviderStateMixin {
                       mainAxisAlignment: MainAxisAlignment.spaceAround,
                       children: [
                         Text(
-                          "At ${createdAt.hour}:${createdAt.minute}",
+                          DemoLocalization.of(context).getTranslatedValue('at')+" ${createdAt.hour}:${createdAt.minute}",
                           style: TextStyle(
                               fontSize: 13, color: Colors.blueAccent),
                         ),
@@ -147,10 +148,10 @@ class _NewsState extends State<News> with SingleTickerProviderStateMixin {
                                   RoundedInput(
                                     controller: comment,
                                     elevation: true,
-                                    label: 'Your Comment',
+                                    label: DemoLocalization.of(context).getTranslatedValue('your_comment'),
                                   ),
                                   RoundedButton(
-                                      label: 'Add Comment',
+                                      label: DemoLocalization.of(context).getTranslatedValue('add_comment'),
                                       onPressed: () async {
 
                                         await db.updateDoc('news', doc.id, {
@@ -158,7 +159,7 @@ class _NewsState extends State<News> with SingleTickerProviderStateMixin {
                                         }).then((value){
                                           comment.text = '';
                                           Fluttertoast.showToast(
-                                              msg: "Comment added",
+                                              msg: DemoLocalization.of(context).getTranslatedValue('comment_added'),
                                           );
                                         });
                                       }),
@@ -242,7 +243,7 @@ class _NewsState extends State<News> with SingleTickerProviderStateMixin {
               if (snapshot.hasError) {
                 return Center(
                     child:
-                    Text("Something went wrong" + snapshot.error.toString()));
+                    Text(DemoLocalization.of(context).getTranslatedValue('something_wrong') + snapshot.error.toString()));
               }
 
             return Column(

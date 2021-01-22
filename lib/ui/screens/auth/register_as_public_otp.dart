@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:io';
 import 'dart:convert';
 
+import 'package:community_support/localization/demo_localization.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:path/path.dart' as path;
@@ -75,7 +76,7 @@ class _RegisterOtpState extends State<RegisterOtp> {
       'martial_status': arg.martialStatus,
       'title': arg.title,
       'next_of_kin': arg.nextToKin,
-      'email':arg.email,
+      // 'email':arg.email,
       'village': arg.village,
       'id': id,
       'avatar':avatar,
@@ -93,7 +94,7 @@ class _RegisterOtpState extends State<RegisterOtp> {
       'martial_status': arg.martialStatus,
       'title': arg.title,
       'next_of_kin': arg.nextToKin,
-      'email':arg.email,
+      // 'email':arg.email,
       'village': arg.village,
       'id': id,
       'dob':arg.dob,
@@ -143,7 +144,7 @@ class _RegisterOtpState extends State<RegisterOtp> {
               ),
               SizedBox(height: 20),
               Heading(
-                text:'Verification',
+                text:DemoLocalization.of(context).getTranslatedValue('verification'),
                 letterSpacing: 3,
                 fontSize: 22,
               ),
@@ -152,7 +153,7 @@ class _RegisterOtpState extends State<RegisterOtp> {
                 padding: const EdgeInsets.all(10.0),
                 child: Heading(
                   align: TextAlign.center,
-                  text:'We sent you a 6 digit code to verify your phone number',
+                  text:DemoLocalization.of(context).getTranslatedValue('6_digit_code'),
                   color: Colors.amber,
                   fontSize: 14,
                 ),
@@ -164,7 +165,7 @@ class _RegisterOtpState extends State<RegisterOtp> {
               ),
 
               Heading(
-                text: 'Enter your otp code.',
+                text: DemoLocalization.of(context).getTranslatedValue('enter_your_otp_code'),
                 fontSize: 12,
               ),
 
@@ -178,7 +179,7 @@ class _RegisterOtpState extends State<RegisterOtp> {
                     controller: pin,
                     validator: (value){
                       if(value.isEmpty){
-                        return "Pin is required!";
+                        return DemoLocalization.of(context).getTranslatedValue('pin_is_required');
                       }
                       return null;
                     },
@@ -211,7 +212,7 @@ class _RegisterOtpState extends State<RegisterOtp> {
                         print(e);
                         FocusScope.of(context).unfocus();
                         _scaffoldKey.currentState
-                            .showSnackBar(SnackBar(content: Text('Invalid OTP')));
+                            .showSnackBar(SnackBar(content: Text(DemoLocalization.of(context).getTranslatedValue('invalid_otp'))));
                       }
                     },
                   ),
@@ -243,8 +244,8 @@ class _RegisterOtpState extends State<RegisterOtp> {
               Visibility(
                 visible: resendVisible,
                 child: TextWithLink(
-                  text: "Don't receive code?",
-                  link: "Resend",
+                  text: DemoLocalization.of(context).getTranslatedValue('dont_receive_code'),
+                  link: DemoLocalization.of(context).getTranslatedValue('resend'),
                   onTap: (){
                     setState(() {
                       resendVisible = false;
@@ -259,7 +260,7 @@ class _RegisterOtpState extends State<RegisterOtp> {
               SizedBox(height: 10),
 
 
-              RoundedButton(label: 'Log In',
+              RoundedButton(label: DemoLocalization.of(context).getTranslatedValue('log_in'),
                   onPressed: () async {
                     if(_formKey.currentState.validate()){
                       try {
@@ -281,7 +282,7 @@ class _RegisterOtpState extends State<RegisterOtp> {
                         print(e);
                         FocusScope.of(context).unfocus();
                         _scaffoldKey.currentState
-                            .showSnackBar(SnackBar(content: Text('Invalid OTP')));
+                            .showSnackBar(SnackBar(content: Text(DemoLocalization.of(context).getTranslatedValue('invalid_otp'))));
                       }
                     }
                   },

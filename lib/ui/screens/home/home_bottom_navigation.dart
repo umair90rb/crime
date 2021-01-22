@@ -15,7 +15,7 @@ class Home extends StatefulWidget {
   _HomeState createState() => _HomeState();
 }
 
-class _HomeState extends State<Home> with AutomaticKeepAliveClientMixin{
+class _HomeState extends State<Home> {
   GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
   int _selectedIndex = 0;
@@ -41,8 +41,7 @@ class _HomeState extends State<Home> with AutomaticKeepAliveClientMixin{
     });
   }
 
-  @override
-  bool get wantKeepAlive => true;
+
 
 
 
@@ -64,13 +63,13 @@ class _HomeState extends State<Home> with AutomaticKeepAliveClientMixin{
   @override
   Widget build(BuildContext context) {
     List<String> title = [
-      'ABAGANA SECURITY',
-      'REPORT',
-      'NEWS',
-      'SETTING'
+      DemoLocalization.of(context).getTranslatedValue('abagana_security'),
+      DemoLocalization.of(context).getTranslatedValue('reports'),
+      DemoLocalization.of(context).getTranslatedValue('news'),
+      DemoLocalization.of(context).getTranslatedValue('setting')
     ];
 
-    super.build(context);
+
     return Scaffold(
       key: _scaffoldKey,
       appBar: Bar(

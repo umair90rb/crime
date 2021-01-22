@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:community_support/localization/demo_localization.dart';
 import 'package:community_support/services/db_services.dart';
 import 'package:flutter/material.dart';
 import 'package:location/location.dart' as loc;
@@ -97,8 +98,8 @@ class _MapState extends State<Map> with AutomaticKeepAliveClientMixin {
         markerId: MarkerId(mId.toString()),
         position: LatLng(locationData.latitude, locationData.longitude),
         infoWindow: InfoWindow(
-            title: 'Your current location',
-            snippet: 'Drag to change location!'
+            title: DemoLocalization.of(context).getTranslatedValue('your_current_location'),
+            snippet: DemoLocalization.of(context).getTranslatedValue('drag_to_change_location')
         ),
         onDragEnd: (LatLng latlng) {
           newLatLang = latlng;

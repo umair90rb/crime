@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:community_support/localization/demo_localization.dart';
 import 'package:community_support/services/db_services.dart';
 import 'package:flutter/material.dart';
 
@@ -41,7 +42,7 @@ class _ReportState extends State<Report> {
                 children: [
                   TextSpan(text: doc['incidentType'], style: TextStyle(fontWeight: FontWeight.bold)),
                   TextSpan(text: ' - ' ),
-                  TextSpan(text: 'Abagana Njkoka Local Government')
+                  TextSpan(text: DemoLocalization.of(context).getTranslatedValue('local_govt'))
                   // TextSpan(
                   //     text: doc['incidentLocation'],
                   // )
@@ -109,7 +110,7 @@ class _ReportState extends State<Report> {
             );
           }
         if (snapshot.hasError) {
-          return Center(child: Text("Something went wrong"+snapshot.error.toString()));
+          return Center(child: Text(DemoLocalization.of(context).getTranslatedValue('something_wrong')+snapshot.error.toString()));
         }
 
 

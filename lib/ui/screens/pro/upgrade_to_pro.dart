@@ -1,3 +1,4 @@
+import 'package:community_support/localization/demo_localization.dart';
 import 'package:community_support/ui/widget/button.dart';
 import 'package:community_support/ui/widget/heading.dart';
 import 'package:flutter/material.dart';
@@ -19,12 +20,12 @@ class _UpgradeToProState extends State<UpgradeToPro> {
             SizedBox(height: 10,),
 
             Heading(
-              text: 'Buy Premium',
+              text: DemoLocalization.of(context).getTranslatedValue('buy_premium'),
               fontSize: 30,
             ),
             SizedBox(height: 10,),
             Heading(
-              text: 'To unlock report feature you should have to pay N 100',
+              text: DemoLocalization.of(context).getTranslatedValue('unlock_report_feature'),
               fontSize: 20,
               align: TextAlign.center,
             ),
@@ -58,7 +59,7 @@ class _UpgradeToProState extends State<UpgradeToPro> {
             
             RoundedButton(
                 backgroundColor: Colors.amber,
-                label: 'Pay N 100',
+                label: DemoLocalization.of(context).getTranslatedValue('pay_n_100'),
                 textColor: Colors.black,
                 onPressed: (){},
             ),
@@ -66,14 +67,14 @@ class _UpgradeToProState extends State<UpgradeToPro> {
             SizedBox(height: 10,),
 
             Heading(
-              text: 'Restore purchase',
+              text: DemoLocalization.of(context).getTranslatedValue('restore_purchase'),
               fontSize: 18,
             ),
 
             SizedBox(height: 10,),
 
             Heading(
-              text: 'Payments will be charged to your iTunes Account after confirmation Subscription automatically renewed unless auto-renewed is turned off At least 24 hours before the end of the subscription period. Account Will be charged for renewal with in 24 hours prior to the current period.',
+              text: DemoLocalization.of(context).getTranslatedValue('payment_term'),
               fontSize: 14,
               align: TextAlign.justify,
               color: Colors.grey,
@@ -87,7 +88,7 @@ class _UpgradeToProState extends State<UpgradeToPro> {
                 RoundedButton(
                   width: 20,
                   borderRadius: 5,
-                    label: 'Privacy Policy',
+                    label: DemoLocalization.of(context).getTranslatedValue('privacy_policy'),
                     onPressed: (){
                     Navigator.pushNamed(context, '/privacy');
                     },
@@ -96,7 +97,7 @@ class _UpgradeToProState extends State<UpgradeToPro> {
                 RoundedButton(
                   width: 20,
                     borderRadius: 5,
-                    label: 'Terms of Use',
+                    label: DemoLocalization.of(context).getTranslatedValue('terms_of_use'),
                     onPressed: (){
                       Navigator.pushNamed(context, '/terms');
                     },

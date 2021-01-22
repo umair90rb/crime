@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:community_support/localization/demo_localization.dart';
 import 'package:community_support/services/db_services.dart';
 import 'package:community_support/ui/widget/button.dart';
 import 'package:community_support/ui/widget/res_card.dart';
@@ -32,7 +33,7 @@ class _AddNewsState extends State<AddNews> {
       return file;
     } else {
       scaffoldKey.currentState.showSnackBar(
-          SnackBar(content: Text('No file chosen!'))
+          SnackBar(content: Text(DemoLocalization.of(context).getTranslatedValue('no_file_chosen')))
       );
       return;
     }
@@ -66,7 +67,7 @@ class _AddNewsState extends State<AddNews> {
                 controller: subject,
                 decoration: InputDecoration(
                     floatingLabelBehavior: FloatingLabelBehavior.never,
-                    labelText: 'Subject'
+                    labelText: DemoLocalization.of(context).getTranslatedValue('subject')
                 ),
               ),
             ),
@@ -77,7 +78,7 @@ class _AddNewsState extends State<AddNews> {
                 controller: from,
                 decoration: InputDecoration(
                     floatingLabelBehavior: FloatingLabelBehavior.never,
-                    labelText: 'From'
+                    labelText: DemoLocalization.of(context).getTranslatedValue('from')
                 ),
               ),
             ),
@@ -89,7 +90,7 @@ class _AddNewsState extends State<AddNews> {
                 maxLines: 5,
                 decoration: InputDecoration(
                     floatingLabelBehavior: FloatingLabelBehavior.never,
-                    labelText: 'Details'
+                    labelText: DemoLocalization.of(context).getTranslatedValue('details')
                 ),
               ),
             ),
@@ -109,7 +110,7 @@ class _AddNewsState extends State<AddNews> {
             SizedBox(height: 100,),
             
             RoundedButton(
-                label: 'Upload News',
+                label: DemoLocalization.of(context).getTranslatedValue('upload_news'),
                 onPressed: () async {
                   setState(() {
                     loading = true;
@@ -140,8 +141,8 @@ class _AddNewsState extends State<AddNews> {
                         builder: (context) => ResCard(
                           iconTitle: true,
                           textContent: true,
-                          text: 'NEWS HAS BEEN SUBMITTED',
-                          subText: 'This News will be broadcast to all app user.',
+                          text: DemoLocalization.of(context).getTranslatedValue('news_created'),
+                          subText: DemoLocalization.of(context).getTranslatedValue('news_broadcast'),
 
                         )
                     );

@@ -1,3 +1,4 @@
+import 'package:community_support/localization/demo_localization.dart';
 import 'package:community_support/ui/widget/button.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -55,8 +56,8 @@ class _GetLocationFromMapState extends State<GetLocationFromMap> {
         markerId: MarkerId('markId'),
         position: LatLng(locationData.latitude, locationData.longitude),
         infoWindow: InfoWindow(
-            title: 'Your current location',
-            snippet: 'Drag to change location!'
+            title: DemoLocalization.of(context).getTranslatedValue('your_current_location'),
+            snippet: DemoLocalization.of(context).getTranslatedValue('drag_to_change_location')
         ),
         draggable: true,
         onDragEnd: (LatLng latlng){
@@ -80,13 +81,13 @@ class _GetLocationFromMapState extends State<GetLocationFromMap> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Select Location'),
+        title: Text(DemoLocalization.of(context).getTranslatedValue('select_location')),
         backgroundColor: Colors.amber,
         toolbarHeight: 100,
       ),
       floatingActionButton: FloatingActionButton.extended(
         onPressed: () => Navigator.pop(context, newLatLng),
-        label: Text('Select Location'),
+        label: Text(DemoLocalization.of(context).getTranslatedValue('select_location')),
         backgroundColor: Colors.amber,
       ),
       body: Stack(
